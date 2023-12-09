@@ -1,0 +1,7 @@
+FROM postgres
+
+ENV POSTGRES_USER: postgres
+ENV POSTGRES_PASSWORD: azer1234
+ENV POSTGRES_DB: fish_competition
+
+EXPOSE 5431

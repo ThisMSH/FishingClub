@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5431/fish_competition
+    username: postgres
+    password: azer1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
