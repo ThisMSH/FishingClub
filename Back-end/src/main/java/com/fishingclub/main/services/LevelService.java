@@ -3,6 +3,7 @@ package com.fishingclub.main.services;
 import com.fishingclub.main.dto.LevelDTO;
 import com.fishingclub.main.dto.noRelations.LevelNoRelDTO;
 import com.fishingclub.main.entities.Level;
+import com.fishingclub.main.exceptions.ResourceBadRequestException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.LevelRepository;
 import com.fishingclub.main.services.interfaces.ILevelService;
@@ -31,6 +32,10 @@ public class LevelService implements ILevelService {
 
     @Override
     public LevelDTO update(LevelNoRelDTO l) {
+        if (l.getCode() <= 0) {
+            throw new ResourceBadRequestException("Code of the level is invalid.");
+        }
+
         Level level = levelRepository.findById(l.getCode()).orElseThrow(() -> new ResourceNotFoundException("Level with the provided code does not exist."));
 
         level.setDescription(l.getDescription());
@@ -43,11 +48,23 @@ public class LevelService implements ILevelService {
 
     @Override
     public LevelDTO delete(Integer id) {
-        return null;
+        if (id <= 0) {
+            throw new ResourceBadRequestException("Code of the level is invalid.");
+        }
+
+        Level level = levelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Level with the provided code does not exist."));
+
+        levelRepository.deleteById(id);
+
+        return modelMapper.map(level, LevelDTO.class);
     }
 
     @Override
     public LevelDTO getOne(Integer id) {
+        if (id <= 0) {
+            throw new ResourceBadRequestException("Code of the level is invalid.");
+        }
+
         return null;
     }
 
