@@ -15,6 +15,6 @@ public class Utilities {
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
 
-        return PageRequest.of(page, pageSize, sort);
+        return PageRequest.of(page - 1, pageSize, sort);
     }
 }

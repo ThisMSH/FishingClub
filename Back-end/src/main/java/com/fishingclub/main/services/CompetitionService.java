@@ -118,7 +118,7 @@ public class CompetitionService implements ICompetitionService {
         if (!competitions.hasContent()) {
             String message = "";
 
-            if (competitions.getTotalPages() > 0 && (Integer) params.get("page") + 1 > competitions.getTotalPages()) {
+            if (competitions.getTotalPages() > 0 && (Integer) params.get("page") > competitions.getTotalPages()) {
                 message = "No competitions found in the page " + params.get("page") + ".";
             } else {
                 message = "No competitions found.";
