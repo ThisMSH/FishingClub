@@ -29,7 +29,23 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO create(CompetitionNoRelDTO competitionDTO) {
-        return null;
+        if (this.competitionRepository.existsByDate(competitionDTO.getDate())) {
+            throw new ResourceAlreadyExistException("You cannot create 2 or more competitions in the same day.");
+        }
+
+        if (!competitionDTO.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
+            throw new ResourceBadRequestException("Starting time must be in the same day of the competition.");
+        }
+
+        if (competitionDTO.getStartTime().isAfter(competitionDTO.getEndTime())) {
+            throw new ResourceBadRequestException("Ending time cannot be before the starting time");
+        }
+
+        Competition competition = modelMapper.map(competitionDTO, Competition.class);
+
+        Competition createdCompetition = competitionRepository.save(competition);
+
+        return modelMapper.map(createdCompetition, CompetitionDTO.class);
     }
 
     @Override
