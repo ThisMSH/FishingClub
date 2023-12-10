@@ -65,7 +65,9 @@ public class LevelService implements ILevelService {
             throw new ResourceBadRequestException("Code of the level is invalid.");
         }
 
-        return null;
+        Level level = levelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Level with the provided code does not exist."));
+
+        return modelMapper.map(level, LevelDTO.class);
     }
 
     @Override
