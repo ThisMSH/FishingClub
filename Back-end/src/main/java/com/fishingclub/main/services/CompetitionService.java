@@ -55,16 +55,17 @@ public class CompetitionService implements ICompetitionService {
     @Override
     public CompetitionDTO update(CompetitionNoRelDTO competitionDTO) {
         if (competitionDTO.getCode().isBlank()) {
-            throw new ResourceBadRequestException("You must enter the code of the competition.");
+            throw new ResourceBadRequestException("You must provide the code of the competition.");
         }
 
         Competition competition = competitionRepository.findById(competitionDTO.getCode()).orElseThrow(() -> new ResourceNotFoundException("Competition with the code \"" + competitionDTO.getCode() + "\" does not exist."));
 
-        if (this.competitionRepository.existsByDate(competitionDTO.getDate())) {
-            throw new ResourceAlreadyExistException("There is already a competition in this day, please choose another day.");
+        if (!competition.getDate().isEqual(competitionDTO.getDate()) || !competition.getLocation().equals(competitionDTO.getLocation())
+        ) {
+            throw new ResourceAlreadyExistException("Date and Location cannot be updated.");
         }
 
-        if (!competitionDTO.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
+        if (!competition.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
             throw new ResourceBadRequestException("Starting time must be in the same day of the competition.");
         }
 
@@ -72,10 +73,8 @@ public class CompetitionService implements ICompetitionService {
             throw new ResourceBadRequestException("Ending time cannot be before the starting time");
         }
 
-        competition.setDate(competitionDTO.getDate());
         competition.setStartTime(competitionDTO.getStartTime());
         competition.setEndTime(competitionDTO.getEndTime());
-        competition.setLocation(competitionDTO.getLocation());
         competition.setAmount(competitionDTO.getAmount());
 
         Competition updatedCompetition = competitionRepository.save(competition);
@@ -119,7 +118,7 @@ public class CompetitionService implements ICompetitionService {
             String message = "";
 
             if (competitions.getTotalPages() > 0 && (Integer) params.get("page") + 1 > competitions.getTotalPages()) {
-                message = "No competitions found in the page " + ((Integer) params.get("page")  + 1) + ".";
+                message = "No competitions found in the page " + ((Integer) params.get("page") + 1) + ".";
             } else {
                 message = "No competitions found.";
             }

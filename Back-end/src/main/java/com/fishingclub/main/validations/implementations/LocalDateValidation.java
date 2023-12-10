@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class LocalDateValidation implements ConstraintValidator<LocalDateValidator, LocalDate> {
     @Override
     public boolean isValid(LocalDate localDate, ConstraintValidatorContext constraintValidatorContext) {
-        Pattern pattern = Pattern.compile("^20\\d{2}-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1])$");
+        Pattern pattern = Pattern.compile("^20\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\\d|3[0-1])$");
         Matcher matcher = pattern.matcher(localDate.toString());
 
         return matcher.matches();
