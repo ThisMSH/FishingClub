@@ -83,7 +83,15 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO delete(String id) {
-        return null;
+        if (id.isBlank()) {
+            throw new ResourceBadRequestException("You must provide the code of the competition.");
+        }
+
+        Competition competition = competitionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Competition does not exist."));
+
+        competitionRepository.deleteById(id);
+
+        return modelMapper.map(competition, CompetitionDTO.class);
     }
 
     @Override
