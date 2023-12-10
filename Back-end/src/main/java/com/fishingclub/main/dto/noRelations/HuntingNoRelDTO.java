@@ -17,7 +17,7 @@ public class HuntingNoRelDTO {
     private int memberId;
 
     @NotBlank(message = "Competition is required.")
-    @Pattern(regexp = "^[a-z]{3}-([0-2]\\d|3[0-1])-(0\\d|1[1-2])-\\d{2}$", message = "Competition code is invalid.")
+    @Pattern(regexp = "^[a-z]{3}-([0-2]\\d|3[0-1])-(0\\d|1[0-2])-\\d{2}$", message = "Competition code is invalid.")
     private String competitionId;
 
     @NotBlank(message = "Fish name is required.")

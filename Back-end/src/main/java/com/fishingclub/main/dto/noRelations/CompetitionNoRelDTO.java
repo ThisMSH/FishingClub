@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CompetitionNoRelDTO {
     @NotBlank(message = "Code is required")
-    @Pattern(regexp = "^[a-z]{3}-([0-2]\\d|3[0-1])-(0\\d|1[1-2])-\\d{2}$", message = "The code is invalid. Please make sure to fill the location field.")
+    @Pattern(regexp = "^[a-z]{3}-([0-2]\\d|3[0-1])-(0\\d|1[0-2])-\\d{2}$", message = "The code is invalid. Please make sure to fill the location field.")
     private String code;
 
     @NotNull(message = "Date is required.")
