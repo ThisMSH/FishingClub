@@ -3,6 +3,7 @@ package com.fishingclub.main.services;
 import com.fishingclub.main.dto.LevelDTO;
 import com.fishingclub.main.dto.noRelations.LevelNoRelDTO;
 import com.fishingclub.main.entities.Level;
+import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.LevelRepository;
 import com.fishingclub.main.services.interfaces.ILevelService;
 import org.modelmapper.ModelMapper;
@@ -29,8 +30,15 @@ public class LevelService implements ILevelService {
     }
 
     @Override
-    public LevelDTO update(LevelNoRelDTO t) {
-        return null;
+    public LevelDTO update(LevelNoRelDTO l) {
+        Level level = levelRepository.findById(l.getCode()).orElseThrow(() -> new ResourceNotFoundException("Level with the provided code does not exist."));
+
+        level.setDescription(l.getDescription());
+        level.setPoints(l.getPoints());
+
+        Level updatedLevel = levelRepository.save(level);
+
+        return modelMapper.map(updatedLevel, LevelDTO.class);
     }
 
     @Override
