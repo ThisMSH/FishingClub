@@ -9,9 +9,11 @@ import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.exceptions.ResourceUnprocessableException;
 import com.fishingclub.main.repositories.CompetitionRepository;
 import com.fishingclub.main.services.interfaces.ICompetitionService;
+import com.fishingclub.main.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -96,7 +98,13 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO getOne(String id) {
-        return null;
+        if (id.isBlank()) {
+            throw new ResourceBadRequestException("You must enter the code of the competition.");
+        }
+
+        Competition competition = competitionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Competition does not exist."));
+
+        return modelMapper.map(competition, CompetitionDTO.class);
     }
 
     @Override
