@@ -1,6 +1,7 @@
 package com.fishingclub.main.dto;
 
 import com.fishingclub.main.enums.IdentityDocumentType;
+import com.fishingclub.main.validations.IdentityTypeValidator;
 import com.fishingclub.main.validations.LocalDateValidator;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ public class MemberDTO {
     private String nationality;
 
     @NotNull(message = "Identity Document is required.")
+    @IdentityTypeValidator(message = "Identity Document is invalid.")
     private IdentityDocumentType identityDocument;
 
     @NotBlank(message = "Identity number is required.")
