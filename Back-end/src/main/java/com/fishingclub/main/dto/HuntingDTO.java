@@ -1,6 +1,8 @@
 package com.fishingclub.main.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
+import com.fishingclub.main.dto.noRelations.FishNoRelDTO;
+import com.fishingclub.main.dto.noRelations.MemberNoRelDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,13 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HuntingDTO {
     private int id;
-
-    @NotBlank(message = "Number of fishes is required.")
     private int numberOfFish;
-
-    private MemberDTO member;
-
-    private CompetitionDTO competition;
-
-    private FishDTO fish;
+    private MemberNoRelDTO member;
+    private CompetitionNoRelDTO competition;
+    private FishNoRelDTO fish;
 }
