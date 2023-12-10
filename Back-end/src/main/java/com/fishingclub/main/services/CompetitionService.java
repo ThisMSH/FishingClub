@@ -5,6 +5,8 @@ import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
 import com.fishingclub.main.entities.Competition;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceBadRequestException;
+import com.fishingclub.main.exceptions.ResourceNotFoundException;
+import com.fishingclub.main.exceptions.ResourceUnprocessableException;
 import com.fishingclub.main.repositories.CompetitionRepository;
 import com.fishingclub.main.services.interfaces.ICompetitionService;
 import org.modelmapper.ModelMapper;
@@ -34,11 +36,11 @@ public class CompetitionService implements ICompetitionService {
         }
 
         if (!competitionDTO.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
-            throw new ResourceBadRequestException("Starting time must be in the same day of the competition.");
+            throw new ResourceUnprocessableException("Starting time must be in the same day of the competition.");
         }
 
         if (competitionDTO.getStartTime().isAfter(competitionDTO.getEndTime())) {
-            throw new ResourceBadRequestException("Ending time cannot be before the starting time");
+            throw new ResourceUnprocessableException("Ending time cannot be before the starting time");
         }
 
         Competition competition = modelMapper.map(competitionDTO, Competition.class);
@@ -50,7 +52,33 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public CompetitionDTO update(CompetitionNoRelDTO competitionDTO) {
-        return null;
+        if (competitionDTO.getCode().isBlank()) {
+            throw new ResourceBadRequestException("You must enter the code of the competition.");
+        }
+
+        Competition competition = competitionRepository.findById(competitionDTO.getCode()).orElseThrow(() -> new ResourceNotFoundException("Competition with the code \"" + competitionDTO.getCode() + "\" does not exist."));
+
+        if (this.competitionRepository.existsByDate(competitionDTO.getDate())) {
+            throw new ResourceAlreadyExistException("There is already a competition in this day, please choose another day.");
+        }
+
+        if (!competitionDTO.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
+            throw new ResourceBadRequestException("Starting time must be in the same day of the competition.");
+        }
+
+        if (competitionDTO.getStartTime().isAfter(competitionDTO.getEndTime())) {
+            throw new ResourceBadRequestException("Ending time cannot be before the starting time");
+        }
+
+        competition.setDate(competitionDTO.getDate());
+        competition.setStartTime(competitionDTO.getStartTime());
+        competition.setEndTime(competitionDTO.getEndTime());
+        competition.setLocation(competitionDTO.getLocation());
+        competition.setAmount(competitionDTO.getAmount());
+
+        Competition updatedCompetition = competitionRepository.save(competition);
+
+        return modelMapper.map(updatedCompetition, CompetitionDTO.class);
     }
 
     @Override
