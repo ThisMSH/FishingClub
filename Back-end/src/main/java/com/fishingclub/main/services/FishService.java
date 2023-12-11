@@ -4,6 +4,7 @@ import com.fishingclub.main.dto.FishDTO;
 import com.fishingclub.main.dto.noRelations.FishNoRelDTO;
 import com.fishingclub.main.entities.Fish;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
+import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.FishRepository;
 import com.fishingclub.main.services.interfaces.IFishService;
 import org.modelmapper.ModelMapper;
@@ -37,7 +38,13 @@ public class FishService implements IFishService {
 
     @Override
     public FishDTO update(FishNoRelDTO f) {
-        return null;
+        if (!fishRepository.existsById(f.getName())) {
+            throw new ResourceNotFoundException("Fish not found.");
+        }
+
+        Fish fish = fishRepository.save(modelMapper.map(f, Fish.class));
+
+        return modelMapper.map(fish, FishDTO.class);
     }
 
     @Override
