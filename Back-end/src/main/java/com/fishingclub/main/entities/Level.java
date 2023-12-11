@@ -21,6 +21,6 @@ public class Level {
     @Column(nullable = false)
     private int points;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "level")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "level", fetch = FetchType.EAGER)
     private List<Fish> fishes;
 }

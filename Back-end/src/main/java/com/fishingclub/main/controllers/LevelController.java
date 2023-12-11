@@ -40,7 +40,7 @@ public class LevelController {
     public ResponseEntity<Object> getAllLevels(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "24") int size,
-            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "points") String sortBy,
             @RequestParam(defaultValue = "ASC") String sortOrder
     ) {
         Map<String, Object> params = Utilities.params(page, size, sortBy, sortOrder);
