@@ -72,13 +72,16 @@ public class MemberService implements IMemberService {
 
     @Override
     public Page<MemberDTO> getAll(Map<String, Object> params) {
-        Page<MemberDTO> members = null;
+        Page<MemberDTO> members;
         String fullName = (String) params.get("fullName");
         Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
 
         if (fullName.isEmpty()) {
             Utilities<MemberDTO, Member, Integer> utils = new Utilities<>(modelMapper, memberRepository);
             members = utils.getAllContents(params, MemberDTO.class);
+        } else {
+            Page<Member> contents = memberRepository.findAllByFullName(fullName, pageable);
+            members = contents.map(c -> modelMapper.map(c, MemberDTO.class));
         }
 
         return members;
