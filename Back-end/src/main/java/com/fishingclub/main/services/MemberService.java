@@ -54,7 +54,11 @@ public class MemberService implements IMemberService {
 
     @Override
     public MemberDTO delete(Integer id) {
-        return null;
+        Member member = memberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member not found."));
+
+        memberRepository.deleteById(id);
+
+        return modelMapper.map(member, MemberDTO.class);
     }
 
     @Override
