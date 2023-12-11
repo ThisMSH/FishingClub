@@ -78,24 +78,8 @@ public class LevelService implements ILevelService {
 
     @Override
     public Page<LevelDTO> getAll(Map<String, Object> params) {
-        Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
+        Utilities<LevelDTO, Level, Integer> utils = new Utilities<>(modelMapper, levelRepository);
 
-        Page<Level> levels = levelRepository.findAll(pageable);
-
-        Page<LevelDTO> levelsDTO = levels.map(l -> modelMapper.map(l, LevelDTO.class));
-
-        if (!levels.hasContent()) {
-            String message = "";
-
-            if (levels.getTotalPages() > 0 && (Integer) params.get("page") + 1 > levels.getTotalPages()) {
-                message = "No levels found in the page " + ((Integer) params.get("page") + 1) + ".";
-            } else {
-                message = "No levels found.";
-            }
-
-            throw new ResourceNotFoundException(message);
-        }
-
-        return levelsDTO;
+        return utils.getAllContents(params, LevelDTO.class);
     }
 }
