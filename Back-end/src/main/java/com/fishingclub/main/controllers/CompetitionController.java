@@ -4,6 +4,7 @@ import com.fishingclub.main.dto.CompetitionDTO;
 import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
 import com.fishingclub.main.services.CompetitionService;
 import com.fishingclub.main.utils.ResponseHandler;
+import com.fishingclub.main.utils.Utilities;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,11 +43,7 @@ public class CompetitionController {
             @RequestParam(defaultValue = "date") String sortBy,
             @RequestParam(defaultValue = "ASC") String sortOrder
     ) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("page", page);
-        params.put("size", size);
-        params.put("sortBy", sortBy);
-        params.put("sortOrder", sortOrder);
+        Map<String, Object> params = Utilities.params(page, size, sortBy, sortOrder);
 
         var competitions = competitionService.getAll(params);
 
