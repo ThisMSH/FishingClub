@@ -7,9 +7,11 @@ import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.MemberRepository;
 import com.fishingclub.main.services.interfaces.IMemberService;
+import com.fishingclub.main.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -70,6 +72,15 @@ public class MemberService implements IMemberService {
 
     @Override
     public Page<MemberDTO> getAll(Map<String, Object> params) {
-        return null;
+        Page<MemberDTO> members = null;
+        String fullName = (String) params.get("fullName");
+        Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
+
+        if (fullName.isEmpty()) {
+            Utilities<MemberDTO, Member, Integer> utils = new Utilities<>(modelMapper, memberRepository);
+            members = utils.getAllContents(params, MemberDTO.class);
+        }
+
+        return members;
     }
 }
