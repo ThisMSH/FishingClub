@@ -7,15 +7,21 @@ import com.fishingclub.main.exceptions.ResourceBadRequestException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.LevelRepository;
 import com.fishingclub.main.services.interfaces.ILevelService;
+import com.fishingclub.main.utils.Utilities;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Service
 public class LevelService implements ILevelService {
     private final LevelRepository levelRepository;
     private final ModelMapper modelMapper;
 
+    @Autowired
     public LevelService(LevelRepository levelRepository, ModelMapper modelMapper) {
         this.levelRepository = levelRepository;
         this.modelMapper = modelMapper;
@@ -72,6 +78,24 @@ public class LevelService implements ILevelService {
 
     @Override
     public Page<LevelDTO> getAll(Map<String, Object> params) {
-        return null;
+        Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
+
+        Page<Level> levels = levelRepository.findAll(pageable);
+
+        Page<LevelDTO> levelsDTO = levels.map(l -> modelMapper.map(l, LevelDTO.class));
+
+        if (!levels.hasContent()) {
+            String message = "";
+
+            if (levels.getTotalPages() > 0 && (Integer) params.get("page") + 1 > levels.getTotalPages()) {
+                message = "No levels found in the page " + ((Integer) params.get("page") + 1) + ".";
+            } else {
+                message = "No levels found.";
+            }
+
+            throw new ResourceNotFoundException(message);
+        }
+
+        return levelsDTO;
     }
 }

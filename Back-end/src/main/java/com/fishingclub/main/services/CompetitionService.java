@@ -108,24 +108,8 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public Page<CompetitionDTO> getAll(Map<String, Object> params) {
-        Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
+        Utilities<CompetitionDTO, Competition, String> utils = new Utilities<>(modelMapper, competitionRepository);
 
-        Page<Competition> competitions = competitionRepository.findAll(pageable);
-
-        Page<CompetitionDTO> competitionsDTO = competitions.map(c -> modelMapper.map(c, CompetitionDTO.class));
-
-        if (!competitions.hasContent()) {
-            String message = "";
-
-            if (competitions.getTotalPages() > 0 && (Integer) params.get("page") + 1 > competitions.getTotalPages()) {
-                message = "No competitions found in the page " + ((Integer) params.get("page") + 1) + ".";
-            } else {
-                message = "No competitions found.";
-            }
-
-            throw new ResourceNotFoundException(message);
-        }
-
-        return competitionsDTO;
+        return utils.getAllContents(params, CompetitionDTO.class);
     }
 }
