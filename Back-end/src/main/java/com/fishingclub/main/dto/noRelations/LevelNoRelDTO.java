@@ -14,7 +14,7 @@ public class LevelNoRelDTO {
     private int code;
 
     @NotBlank(message = "Description is required.")
-    @Size(min = 10, max = 255, message = "Description must be between 10 and 255 characters.")
+    @Size(min = 2, max = 255, message = "Description must be between 2 and 255 characters.")
     private String description;
 
     @Positive(message = "Points are required and must be greater than 0.")
