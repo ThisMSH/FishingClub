@@ -62,9 +62,7 @@ public class LevelService implements ILevelService {
 
         levelRepository.deleteById(id);
 
-        LevelDTO l = modelMapper.map(level, LevelDTO.class);
-
-        return l;
+        return modelMapper.map(level, LevelDTO.class);
     }
 
     @Override
