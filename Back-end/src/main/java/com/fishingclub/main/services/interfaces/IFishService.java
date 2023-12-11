@@ -1,4 +1,7 @@
 package com.fishingclub.main.services.interfaces;
 
-public interface IFishService {
+import com.fishingclub.main.dto.FishDTO;
+import com.fishingclub.main.dto.noRelations.FishNoRelDTO;
+
+public interface IFishService extends GenericService<FishDTO, FishNoRelDTO, String> {
 }
