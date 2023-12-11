@@ -4,6 +4,7 @@ import com.fishingclub.main.dto.MemberDTO;
 import com.fishingclub.main.dto.noRelations.MemberNoRelDTO;
 import com.fishingclub.main.entities.Member;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
+import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.MemberRepository;
 import com.fishingclub.main.services.interfaces.IMemberService;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class MemberService implements IMemberService {
@@ -38,8 +40,16 @@ public class MemberService implements IMemberService {
     }
 
     @Override
-    public MemberDTO update(MemberNoRelDTO t) {
-        return null;
+    public MemberDTO update(MemberNoRelDTO m) {
+        Member member = memberRepository.findById(m.getNumber()).orElseThrow(() -> new ResourceNotFoundException("Member not found."));
+
+        if (memberRepository.existsByIdentityNumber(m.getIdentityNumber()) && !Objects.equals(member.getIdentityNumber(), m.getIdentityNumber())) {
+            throw new ResourceAlreadyExistException("Member with this identity number already exists.");
+        }
+
+        Member updatedMember = memberRepository.save(modelMapper.map(m, Member.class));
+
+        return modelMapper.map(updatedMember, MemberDTO.class);
     }
 
     @Override
