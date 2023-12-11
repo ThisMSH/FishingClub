@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Utilities<T, C, I> {
@@ -34,10 +35,20 @@ public class Utilities<T, C, I> {
     }
 
     public Page<T> getAllContents(Map<String, Object> params, Class<T> targetClass) {
-        Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
+        Pageable pageable = managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
 
         Page<C> contents = repository.findAll(pageable);
 
         return contents.map(c -> modelMapper.map(c, targetClass));
+    }
+
+    public static Map<String, Object> params(int page, int size, String sortBy, String sortOrder) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        params.put("size", size);
+        params.put("sortBy", sortBy);
+        params.put("sortOrder", sortOrder);
+
+        return params;
     }
 }
