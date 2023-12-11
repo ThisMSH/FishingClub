@@ -7,6 +7,7 @@ import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.FishRepository;
 import com.fishingclub.main.services.interfaces.IFishService;
+import com.fishingclub.main.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -65,6 +66,8 @@ public class FishService implements IFishService {
 
     @Override
     public Page<FishDTO> getAll(Map<String, Object> params) {
-        return null;
+        Utilities<FishDTO, Fish, String> utils = new Utilities<>(modelMapper, fishRepository);
+
+        return utils.getAllContents(params, FishDTO.class);
     }
 }
