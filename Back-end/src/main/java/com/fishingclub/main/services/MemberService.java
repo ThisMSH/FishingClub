@@ -73,7 +73,7 @@ public class MemberService implements IMemberService {
     @Override
     public Page<MemberDTO> getAll(Map<String, Object> params) {
         Page<MemberDTO> members;
-        String fullName = (String) params.get("fullName");
+        String fullName = params.get("fullName").toString().toLowerCase();
         Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
 
         if (fullName.isEmpty()) {

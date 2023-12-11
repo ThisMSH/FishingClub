@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     Boolean existsByIdentityNumber(String identityNumber);
 
-    @Query("SELECT m FROM Member m WHERE CONCAT(m.name, ' ', m.familyName) LIKE %:fullName%")
+    @Query("SELECT m FROM Member m WHERE LOWER(CONCAT(m.name, ' ', m.familyName)) LIKE %:fullName%")
     Page<Member> findAllByFullName(@Param("fullName") String fullName, Pageable pageable);
 }
