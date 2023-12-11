@@ -63,7 +63,9 @@ public class MemberService implements IMemberService {
 
     @Override
     public MemberDTO getOne(Integer id) {
-        return null;
+        Member member = memberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member not found."));
+
+        return modelMapper.map(member, MemberDTO.class);
     }
 
     @Override
