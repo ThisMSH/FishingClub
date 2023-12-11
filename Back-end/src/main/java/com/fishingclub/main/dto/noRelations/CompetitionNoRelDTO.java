@@ -21,7 +21,7 @@ public class CompetitionNoRelDTO {
 
     @NotNull(message = "Date is required.")
     @LocalDateValidator(message = "The date is invalid.")
-    @Future(message = "You cannot create a competition in the past.")
+    @Future(message = "You cannot create a competition before today.")
     private LocalDate date;
 
     @NotNull(message = "Starting time is required.")

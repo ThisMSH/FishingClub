@@ -2,6 +2,7 @@ package com.fishingclub.main.controllers;
 
 import com.fishingclub.main.dto.CompetitionDTO;
 import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
+import com.fishingclub.main.enums.CompetitionFilterType;
 import com.fishingclub.main.services.CompetitionService;
 import com.fishingclub.main.utils.ResponseHandler;
 import com.fishingclub.main.utils.Utilities;
@@ -41,9 +42,11 @@ public class CompetitionController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "24") int size,
             @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "ASC") String sortOrder
-    ) {
+            @RequestParam(defaultValue = "ASC") String sortOrder,
+            @RequestParam(defaultValue = "ALL") CompetitionFilterType filter
+            ) {
         Map<String, Object> params = Utilities.params(page, size, sortBy, sortOrder);
+        params.put("filter", filter);
 
         var competitions = competitionService.getAll(params);
 

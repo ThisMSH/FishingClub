@@ -3,6 +3,7 @@ package com.fishingclub.main.services;
 import com.fishingclub.main.dto.CompetitionDTO;
 import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
 import com.fishingclub.main.entities.Competition;
+import com.fishingclub.main.enums.CompetitionFilterType;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceBadRequestException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -108,8 +110,27 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public Page<CompetitionDTO> getAll(Map<String, Object> params) {
-        Utilities<CompetitionDTO, Competition, String> utils = new Utilities<>(modelMapper, competitionRepository);
+        Page<CompetitionDTO> competitions = null;
+        Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
 
-        return utils.getAllContents(params, CompetitionDTO.class);
+        if (params.get("filter") == CompetitionFilterType.ALL)
+        {
+            Utilities<CompetitionDTO, Competition, String> utils = new Utilities<>(modelMapper, competitionRepository);
+            competitions = utils.getAllContents(params, CompetitionDTO.class);
+        } else if (params.get("filter") == CompetitionFilterType.ONGOING)
+        {
+            Page<Competition> contents = competitionRepository.findAllByStartTimeAfterAndEndTimeBefore(LocalDateTime.now(), LocalDateTime.now(), pageable);
+            competitions = contents.map(c -> modelMapper.map(c, CompetitionDTO.class));
+        } else if (params.get("filter") == CompetitionFilterType.DONE)
+        {
+            Page<Competition> contents = competitionRepository.findAllByStartTimeBefore(LocalDateTime.now(), pageable);
+            competitions = contents.map(c -> modelMapper.map(c, CompetitionDTO.class));
+        } else if (params.get("filter") == CompetitionFilterType.INCOMING)
+        {
+            Page<Competition> contents = competitionRepository.findAllByEndTimeAfter(LocalDateTime.now(), pageable);
+            competitions = contents.map(c -> modelMapper.map(c, CompetitionDTO.class));
+        }
+
+        return competitions;
     }
 }
