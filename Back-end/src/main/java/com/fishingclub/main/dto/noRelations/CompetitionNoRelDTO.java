@@ -40,7 +40,7 @@ public class CompetitionNoRelDTO {
     @DecimalMin(value = "0", inclusive = false, message = "Amount must be greater than 0.")
     private double amount;
 
-    private List<RankingKey> rankingIds;
+    private List<RankingKey> rankingKeys;
 
     private List<Integer> huntingIds;
 }

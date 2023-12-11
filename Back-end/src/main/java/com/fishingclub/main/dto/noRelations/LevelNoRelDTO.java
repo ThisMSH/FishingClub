@@ -20,5 +20,5 @@ public class LevelNoRelDTO {
     @Positive(message = "Points are required and must be greater than 0.")
     private int points;
 
-    private List<String> fishIds;
+    private List<String> fishNames;
 }

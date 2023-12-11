@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -28,38 +29,45 @@ public class FishService implements IFishService {
 
     @Override
     public FishDTO create(FishNoRelDTO f) {
-        if (fishRepository.existsById(f.getName())) {
+        if (fishRepository.existsById(f.getName().toLowerCase())) {
             throw new ResourceAlreadyExistException("Fish with the name \"" + f.getName() + "\" already exists.");
         }
 
-        Fish fish = fishRepository.save(modelMapper.map(f, Fish.class));
+        Fish fish = modelMapper.map(f, Fish.class);
+        fish.setName(fish.getName().toLowerCase());
 
-        return modelMapper.map(fish, FishDTO.class);
+        Fish createdFish = fishRepository.save(fish);
+
+        return modelMapper.map(createdFish, FishDTO.class);
     }
 
     @Override
     public FishDTO update(FishNoRelDTO f) {
-        if (!fishRepository.existsById(f.getName())) {
+        if (!fishRepository.existsById(f.getName().toLowerCase())) {
             throw new ResourceNotFoundException("Fish not found.");
         }
 
-        Fish fish = fishRepository.save(modelMapper.map(f, Fish.class));
+        Fish fish = modelMapper.map(f, Fish.class);
+        fish.setName(f.getName().toLowerCase());
 
-        return modelMapper.map(fish, FishDTO.class);
+        Fish updatedFish = fishRepository.save(fish);
+
+        return modelMapper.map(updatedFish, FishDTO.class);
     }
 
     @Override
+//    @Transactional
     public FishDTO delete(String id) {
-        Fish fish = fishRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Fish not found."));
+        Fish fish = fishRepository.findById(id.toLowerCase()).orElseThrow(() -> new ResourceNotFoundException("Fish not found."));
 
-        fishRepository.deleteById(id);
+        fishRepository.deleteById(fish.getName());
 
         return modelMapper.map(fish, FishDTO.class);
     }
 
     @Override
     public FishDTO getOne(String id) {
-        Fish fish = fishRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Fish not found."));
+        Fish fish = fishRepository.findById(id.toLowerCase()).orElseThrow(() -> new ResourceNotFoundException("Fish not found."));
 
         return modelMapper.map(fish, FishDTO.class);
     }

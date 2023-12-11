@@ -18,7 +18,7 @@ public class FishNoRelDTO {
     private double averageWeight;
 
     @Positive(message = "Level is required.")
-    private int levelId;
+    private int levelCode;
 
     private List<Integer> huntingIds;
 }

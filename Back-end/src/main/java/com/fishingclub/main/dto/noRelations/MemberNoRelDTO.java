@@ -43,7 +43,7 @@ public class MemberNoRelDTO {
     @NotBlank(message = "Identity number is required.")
     private String identityNumber;
 
-    private List<RankingKey> rankingIds;
+    private List<RankingKey> rankingKeys;
 
     private List<Integer> huntingIds;
 }
