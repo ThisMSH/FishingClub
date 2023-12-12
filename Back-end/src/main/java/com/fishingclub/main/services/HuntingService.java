@@ -101,7 +101,9 @@ public class HuntingService implements IHuntingService {
 
     @Override
     public HuntingDTO getOne(Integer id) {
-        return null;
+        Hunting hunting = huntingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hunting not found."));
+
+        return modelMapper.map(hunting, HuntingDTO.class);
     }
 
     @Override
