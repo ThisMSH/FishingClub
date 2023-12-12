@@ -22,6 +22,17 @@ public class RankingController {
         this.rankingService = rankingService;
     }
 
+    @PostMapping("/rank")
+    public ResponseEntity<Object> getRanking(@RequestBody @Valid RankingKey key) {
+        RankingDTO ranking = rankingService.getOne(key);
+
+        return ResponseHandler.success(
+                "The ranking has been fetched successfully.",
+                HttpStatus.OK,
+                ranking
+        );
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Object> assignRanking(@RequestBody @Valid RankingNoRelDTO r) {
         RankingDTO ranking = rankingService.create(r);
