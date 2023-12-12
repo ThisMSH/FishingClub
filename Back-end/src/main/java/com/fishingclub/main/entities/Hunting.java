@@ -14,7 +14,7 @@ public class Hunting {
     private int id;
 
     @Column(nullable = false)
-    private int numberOfFish;
+    private int numberOfFish = 1;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

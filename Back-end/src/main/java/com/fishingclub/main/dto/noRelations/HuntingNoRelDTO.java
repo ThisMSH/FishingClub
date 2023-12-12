@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class HuntingNoRelDTO {
-    private int id;
+    private Integer id;
 
-    private int numberOfFish;
+    @Positive(message = "Weight of the fish is required.")
+    private int weight;
 
     @Positive(message = "Member is required.")
     private int memberNumber;
