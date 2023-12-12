@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RankingService implements IRankingService {
@@ -153,5 +154,16 @@ public class RankingService implements IRankingService {
         }
 
         rankingRepository.saveAll(rankingList);
+    }
+
+    @Override
+    public List<RankingDTO> getByCompetitionCode(String code) {
+        if (!competitionRepository.existsById(code)) {
+            throw new ResourceNotFoundException("Competition not found.");
+        }
+
+        List<Ranking> rankingList = rankingRepository.findAllByCompetitionCodeOrderByScoreDesc(code);
+
+        return rankingList.stream().map(ranking -> modelMapper.map(ranking, RankingDTO.class)).collect(Collectors.toList());
     }
 }

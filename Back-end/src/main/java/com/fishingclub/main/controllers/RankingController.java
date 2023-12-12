@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ranking")
@@ -20,6 +22,17 @@ public class RankingController {
     @Autowired
     public RankingController(RankingService rankingService) {
         this.rankingService = rankingService;
+    }
+
+    @GetMapping("/{code}")
+    public ResponseEntity<Object> getRankingByCompetition(@PathVariable String code) {
+        List<RankingDTO> rankingList = rankingService.getByCompetitionCode(code);
+
+        return ResponseHandler.success(
+                "The ranking of the competition \"" + code + "\" have been fetched successfully.",
+                HttpStatus.OK,
+                rankingList
+        );
     }
 
     @PostMapping("/rank")
