@@ -45,7 +45,10 @@ public class HuntingService implements IHuntingService {
         Hunting hunting;
         Fish fish = fishRepository.findById(h.getFishName()).orElseThrow(() -> new ResourceNotFoundException("Fish not found."));
         Competition competition = competitionRepository.findById(h.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition not found."));
-        Member member = memberRepository.findById(h.getMemberNumber()).orElseThrow(() -> new ResourceNotFoundException("Member not found."));
+
+        if (memberRepository.existsById(h.getMemberNumber())) {
+            throw new ResourceNotFoundException("Member not found.");
+        }
 
         if (competition.getStartTime().isBefore(LocalDateTime.now())) {
             throw new ResourceBadRequestException("You cannot add hunted fishes in a competition that did not start yet.");
