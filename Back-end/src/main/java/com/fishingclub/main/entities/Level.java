@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "levels")
 public class Level {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int code;
 
     @Column(nullable = false)

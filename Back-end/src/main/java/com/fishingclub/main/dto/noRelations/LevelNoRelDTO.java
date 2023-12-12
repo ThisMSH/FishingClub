@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class LevelNoRelDTO {
+    @Positive(message = "Code is required.")
     private int code;
 
     @NotBlank(message = "Description is required.")

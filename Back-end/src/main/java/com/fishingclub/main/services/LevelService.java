@@ -3,6 +3,7 @@ package com.fishingclub.main.services;
 import com.fishingclub.main.dto.LevelDTO;
 import com.fishingclub.main.dto.noRelations.LevelNoRelDTO;
 import com.fishingclub.main.entities.Level;
+import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceBadRequestException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.LevelRepository;
@@ -29,6 +30,10 @@ public class LevelService implements ILevelService {
 
     @Override
     public LevelDTO create(LevelNoRelDTO l) {
+        if (levelRepository.existsById(l.getCode())) {
+            throw new ResourceAlreadyExistException("Level with the code \"" + l.getCode() + "\" already exists.");
+        }
+
         Level level = modelMapper.map(l, Level.class);
 
         Level createdLevel = levelRepository.save(level);
