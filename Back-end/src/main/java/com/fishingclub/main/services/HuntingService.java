@@ -82,7 +82,18 @@ public class HuntingService implements IHuntingService {
 
     @Override
     public HuntingDTO delete(Integer id) {
-        return null;
+        Hunting hunting = huntingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hunting not found."));
+
+        if (hunting.getNumberOfFish() > 1) {
+            int newNumOfFish = hunting.getNumberOfFish();
+            hunting.setNumberOfFish(--newNumOfFish);
+
+            hunting = huntingRepository.save(hunting);
+        } else {
+            huntingRepository.deleteById(id);
+        }
+
+        return modelMapper.map(hunting, HuntingDTO.class);
     }
 
     @Override
