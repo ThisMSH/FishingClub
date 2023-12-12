@@ -33,6 +33,17 @@ public class RankingController {
         );
     }
 
+    @PostMapping("/set-ranks/{code}")
+    public ResponseEntity<Object> setRankings(@PathVariable String code) {
+        rankingService.update(code);
+
+        return ResponseHandler.success(
+                "The ranks have been set successfully.",
+                HttpStatus.OK,
+                null
+        );
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<Object> deleteRanking(@RequestBody @Valid RankingKey key) {
         RankingDTO ranking = rankingService.delete(key);

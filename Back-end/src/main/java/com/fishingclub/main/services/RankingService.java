@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -103,5 +104,40 @@ public class RankingService implements IRankingService {
     @Override
     public Page<RankingDTO> getAll(Map<String, Object> params) {
         return null;
+    }
+
+    @Override
+    public void update(String code) {
+        int count = 1;
+        int temp = 0;
+
+        if (!competitionRepository.existsById(code)) {
+            throw new ResourceNotFoundException("Competition not found.");
+        }
+
+        List<Ranking> rankingList = rankingRepository.findAllByCompetitionCodeOrderByScoreDesc(code);
+
+        for (int i = 0; i < rankingList.size(); i++) {
+            if (i == 0) {
+                rankingList.get(i).setRank(count);
+                count++;
+                continue;
+            }
+
+            if (rankingList.get(i - 1).getScore() == rankingList.get(i).getScore()) {
+                count--;
+                temp++;
+
+                rankingList.get(i).setRank(count);
+                count += temp;
+                continue;
+            }
+
+            rankingList.get(i).setRank(count);
+            count++;
+            temp = 0;
+        }
+
+        rankingRepository.saveAll(rankingList);
     }
 }
