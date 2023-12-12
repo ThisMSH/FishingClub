@@ -30,7 +30,7 @@ public class CompetitionNoRelDTO {
     @NotNull(message = "Ending time is required.")
     private LocalDateTime endTime;
 
-    @NotNull(message = "Ending time is required.")
+    @NotNull(message = "Number of participants is required.")
     @Positive(message = "Number of participants have to be greater than 0.")
     private int numberOfParticipants;
 

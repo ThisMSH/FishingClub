@@ -61,6 +61,10 @@ public class RankingService implements IRankingService {
             throw new ResourceUnprocessableException("You cannot assign new participants before 24h or less from the start of the competition.");
         }
 
+        if (rankingRepository.getMembersCount(t.getCompetitionCode()) >= competition.getNumberOfParticipants()) {
+            throw new ResourceUnprocessableException("This competition is already full.");
+        };
+
         Ranking ranking = new Ranking();
         ranking.setId(key);
         ranking.setMember(member);
