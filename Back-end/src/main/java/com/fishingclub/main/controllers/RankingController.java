@@ -2,6 +2,7 @@ package com.fishingclub.main.controllers;
 
 import com.fishingclub.main.dto.RankingDTO;
 import com.fishingclub.main.dto.noRelations.RankingNoRelDTO;
+import com.fishingclub.main.embeddables.RankingKey;
 import com.fishingclub.main.services.RankingService;
 import com.fishingclub.main.utils.ResponseHandler;
 import jakarta.validation.Valid;
@@ -28,6 +29,17 @@ public class RankingController {
         return ResponseHandler.success(
                 "The member has been assigned to the competition successfully.",
                 HttpStatus.CREATED,
+                ranking
+        );
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Object> deleteRanking(@RequestBody @Valid RankingKey key) {
+        RankingDTO ranking = rankingService.delete(key);
+
+        return ResponseHandler.success(
+                "The member has been removed from the competition successfully.",
+                HttpStatus.OK,
                 ranking
         );
     }

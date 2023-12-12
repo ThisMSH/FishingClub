@@ -48,7 +48,7 @@ public class RankingService implements IRankingService {
         if (rankingRepository.existsById(key)) {
             throw new ResourceAlreadyExistException("Member \"" + member.getName() + " " + member.getFamilyName() + "\" is already in this competition.");
         }
-        
+
         if (competition.getEndTime().isBefore(LocalDateTime.now())) {
             throw new ResourceUnprocessableException("This competition has already ended.");
         }
@@ -76,7 +76,23 @@ public class RankingService implements IRankingService {
 
     @Override
     public RankingDTO delete(RankingKey id) {
-        return null;
+        RankingKey key = new RankingKey();
+        key.setCompetitionCode(id.getCompetitionCode());
+        key.setMemberNumber(id.getMemberNumber());
+
+        if (!memberRepository.existsById(id.getMemberNumber())) {
+            throw new ResourceNotFoundException("Member not found.");
+        }
+
+        if (!competitionRepository.existsById(id.getCompetitionCode())) {
+            throw new ResourceNotFoundException("Competition not found.");
+        }
+
+        Ranking ranking = rankingRepository.findById(key).orElseThrow(() -> new ResourceNotFoundException("Ranking not found."));
+
+        rankingRepository.deleteById(key);
+
+        return modelMapper.map(ranking, RankingDTO.class);
     }
 
     @Override
