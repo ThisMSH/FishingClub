@@ -16,7 +16,7 @@ public class CompetitionDTO {
     private LocalDate date;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private int numberOfParticipants = 0;
+    private int numberOfParticipants;
     private String location;
     private double amount;
     private List<RankingNoRelDTO> rankings;

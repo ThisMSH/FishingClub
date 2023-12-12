@@ -13,7 +13,7 @@ import java.util.List;
 public class Fish {
     @Id
     @Column(nullable = false)
-    private String name = "hunting";
+    private String name;
 
     @Column(nullable = false)
     private double averageWeight;
@@ -22,6 +22,6 @@ public class Fish {
     @JoinColumn(name = "level_id")
     private Level level;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "fish")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fish")
     private List<Hunting> huntings;
 }
