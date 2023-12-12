@@ -56,11 +56,10 @@ public class FishService implements IFishService {
     }
 
     @Override
-    @Transactional
     public FishDTO delete(String id) {
         Fish fish = fishRepository.findById(id.toLowerCase()).orElseThrow(() -> new ResourceNotFoundException("Fish not found."));
 
-        fishRepository.deleteByName(fish.getName());
+        fishRepository.deleteById(id.toLowerCase());
 
         return modelMapper.map(fish, FishDTO.class);
     }
