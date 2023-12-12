@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class RankingNoRelDTO {
-    private int rank;
-
-    private int score;
-
     @Positive(message = "Member is required.")
     private int memberNumber;
 

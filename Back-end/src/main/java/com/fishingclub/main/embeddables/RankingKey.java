@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Embeddable
 public class RankingKey implements Serializable {
     @Column(name = "member_id")
-    private Long memberId;
+    private int memberNumber;
 
     @Column(name = "competition_id")
-    private String competitionId;
+    private String competitionCode;
 }

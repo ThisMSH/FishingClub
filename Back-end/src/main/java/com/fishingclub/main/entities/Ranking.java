@@ -14,18 +14,18 @@ public class Ranking {
     private RankingKey id;
 
     @Column(nullable = false)
-    private int rank;
+    private int rank = 0;
 
     @Column(nullable = false)
-    private int score;
+    private int score = 0;
 
     @ManyToOne
-    @MapsId("memberId")
+    @MapsId("memberNumber")
     @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne
-    @MapsId("competitionId")
+    @MapsId("competitionCode")
     @JoinColumn(name = "competition_id")
     private Competition competition;
 }
