@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class HuntingNoRelDTO {
     private Integer id;
 
-    @Positive(message = "Weight of the fish is required.")
-    private int weight;
+    @Positive(message = "Weight of the fish is required and has to be greater than 0.")
+    private double weight;
 
     @Positive(message = "Member is required.")
     private int memberNumber;
