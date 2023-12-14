@@ -1,0 +1,22 @@
+<a
+    class="relative py-3 px-7 flex items-center gap-3 text-xl font-bold rounded-full border overflow-hidden transition-all duration-300 before:absolute before:-top-1/2 before:left-0 before:w-1/2 before:h-[200%] before:bg-gradient-to-l dark:before:from-neutral-50/20 before:from-neutral-50/30 before:to-transparent before:skew-x-[45deg] before:transition-all before:duration-300"
+    [ngClass]="{
+        'text-neutral-700 dark:text-neutral-300 bg-neutral-300 dark:bg-neutral-700 border-neutral-400 dark:border-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-600':
+            !isActive,
+        'bg-gradient-to-br from-neutral-200 to-neutral-500 dark:from-neutral-600 dark:to-neutral-900 before:translate-x-[-150%] border-neutral-600 dark:border-neutral-400':
+            isActive
+    }"
+    [routerLink]="linkInfo.link"
+    routerLinkActive="active"
+    (isActiveChange)="isActive = !isActive"
+>
+    <img
+        class="w-12 z-[1] hue-rotate-0"
+        [ngClass]="{ grayscale: !isActive, 'grayscale-0': isActive }"
+        [src]="linkInfo.img"
+        [alt]="linkInfo.name"
+    />
+    <p class="z-[1]">
+        {{ linkInfo.name }}
+    </p>
+</a>

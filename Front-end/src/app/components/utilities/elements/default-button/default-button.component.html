@@ -1,0 +1,11 @@
+<button
+    (click)="btnClick($event)"
+    [type]="type"
+    data-te-ripple-init
+    data-te-ripple-color="light"
+    class="flex items-center rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal  transition duration-150 ease-in-out focus:outline-none focus:ring-0"
+    [ngClass]="btnStyle"
+>
+    <ng-content></ng-content>
+    {{ label }}
+</button>

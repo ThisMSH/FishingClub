@@ -1,0 +1,14 @@
+<aside
+    class="px-3 py-4 bg-neutral-200 dark:bg-neutral-800 rounded-xl border border-neutral-300 dark:border-neutral-700"
+>
+    <div class="px-2 pb-2">
+        <p
+            class="text-2xl font-lilita-one text-center text-blue-700 dark:text-blue-200 border-b border-neutral-400 dark:border-neutral-600"
+        >
+            AFTAS Dashboard
+        </p>
+    </div>
+    <div class="my-4 flex flex-col gap-3">
+        <app-side-bar-link *ngFor="let linkInfo of sideBarLinks" [linkInfo]="linkInfo"></app-side-bar-link>
+    </div>
+</aside>

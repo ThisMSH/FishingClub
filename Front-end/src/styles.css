@@ -1,3 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Preahvihear&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    @apply w-2 h-2 rounded-full;
+}
+
+*::-webkit-scrollbar-track {
+    @apply rounded-full;
+}
+
+*::-webkit-scrollbar-thumb {
+    @apply bg-blue-400 rounded-full;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    @apply bg-blue-600;
+}
+
+*::selection {
+    @apply text-white bg-neutral-800;
+}
+
+.dark *::selection {
+    @apply text-black bg-neutral-300
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

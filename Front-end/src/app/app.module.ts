@@ -15,6 +15,20 @@ import { FishDetailsComponent } from './views/dashboard/fishes/fish-details/fish
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { MainComponent } from './views/main/main.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
+import { DashboardSideBarComponent } from './components/dashboard-side-bar/dashboard-side-bar.component';
+import { DefaultButtonComponent } from './components/utilities/elements/default-button/default-button.component';
+import { DarkModeComponent } from './components/dark-mode/dark-mode.component';
+import { BreadcrumbComponent } from './components/utilities/other/breadcrumb/breadcrumb.component';
+import { SideBarLinkComponent } from './components/utilities/elements/side-bar-link/side-bar-link.component';
+import { ContentContainerComponent } from './components/utilities/other/content-container/content-container.component';
+import { ContentContainerHeaderComponent } from './components/utilities/other/content-container-header/content-container-header.component';
+import { CompetitionCardComponent } from './components/competition-card/competition-card.component';
+import { DefaultInputComponent } from './components/utilities/elements/default-input/default-input.component';
+import { CompetitionInfoComponent } from './components/competition-info/competition-info.component';
+import { CompetitionRankingComponent } from './components/competition-ranking/competition-ranking.component';
+import { CompetitionMemberComponent } from './components/competition-member/competition-member.component';
+import { CompetitionMemberDetailsComponent } from './components/utilities/other/competition-member-details/competition-member-details.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +44,21 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
     FishDetailsComponent,
     PageNotFoundComponent,
     MainComponent,
-    DashboardComponent
+    DashboardComponent,
+    DashboardHeaderComponent,
+    DashboardSideBarComponent,
+    DefaultButtonComponent,
+    DarkModeComponent,
+    BreadcrumbComponent,
+    SideBarLinkComponent,
+    ContentContainerComponent,
+    ContentContainerHeaderComponent,
+    CompetitionCardComponent,
+    DefaultInputComponent,
+    CompetitionInfoComponent,
+    CompetitionRankingComponent,
+    CompetitionMemberComponent,
+    CompetitionMemberDetailsComponent
   ],
   imports: [
     BrowserModule,
