@@ -4,20 +4,42 @@
     data-te-ripple-color="light"
     class="block w-full p-4 relative text-neutral-50 rounded border border-neutral-300 dark:border-neutral-700 bg-[url('/assets/images/other/spearfisher.jpg')] bg-no-repeat bg-[length:100%] bg-center overflow-hidden transition-all duration-300 hover:border-neutral-300 hover:drop-shadow-black-sm hover:dark:drop-shadow-white-sm hover:bg-[length:110%] hover:bg-left before:absolute before:bg-gradient-to-b before:from-neutral-950/30 before:via-neutral-950/80 before:to-neutral-950 before:inset-0 before:z-0"
 >
-    <div class="relative pointer-events-none mt-8">
-        <h2 class="text-4xl font-semibold font-preahvihear">El Jadida</h2>
-        <h4
-            class="px-3 inline-block text-sm rounded-full text-red-700 bg-red-300 border border-red-600"
+    <div
+        class="relative pointer-events-none mt-8 flex justify-between items-center"
+    >
+        <h2
+            class="text-4xl font-bold font-preahvihear bg-gradient-to-r from-neutral-400 via-neutral-200 to-neutral-400 bg-clip-text text-transparent"
         >
-            status
+            {{ competition.location }}
+        </h2>
+        <h4
+            class="px-3 inline-block text-xs uppercase rounded-full"
+            [ngClass]="{
+                ongoing: status === 'ongoing',
+                done: status === 'done',
+                incoming: status === 'incoming'
+            }"
+        >
+            {{ status }}
         </h4>
     </div>
-    <div class="relative pointer-events-none mt-2 grid grid-cols-2 [&_span]:font-semibold text-sm">
-        <p><span>Code:</span> elj-11-01-24</p>
-        <p><span>Date:</span> 11-01-2024</p>
-        <p><span>Starting time:</span> 11-01-2024 11:22</p>
-        <p><span>Ending time:</span> 11-01-2024 11:22</p>
-        <p><span>Number of participants:</span> 33</p>
-        <p><span>Amount:</span> 12.4</p>
+    <div
+        class="relative pointer-events-none mt-2 grid grid-cols-2 [&_span]:font-semibold text-sm"
+    >
+        <p><span>Code:</span> {{ competition.code }}</p>
+        <p><span>Date:</span> {{ competition.date | date : "dd-MM-yyyy" }}</p>
+        <p>
+            <span>Starting time:</span>
+            {{ competition.startTime | date : "HH:mm" }}
+        </p>
+        <p>
+            <span>Ending time:</span>
+            {{ competition.endTime | date : "dd-MM-yyyy HH:mm" }}
+        </p>
+        <p>
+            <span>Number of participants:</span>
+            {{ competition.numberOfParticipants }}
+        </p>
+        <p><span>Amount:</span> {{ competition.amount }}</p>
     </div>
 </a>

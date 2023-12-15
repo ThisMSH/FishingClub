@@ -1,0 +1,60 @@
+<app-modal-container
+    title="Create a new competition"
+    modalId="competition-modal"
+    titleId="competition-title"
+    (onSubmit)="onSubmit()"
+    [formGroup]="competitionForm"
+    [isLoading]="isLoading"
+>
+    <div class="grid grid-cols-2 gap-y-10 gap-x-4">
+        <app-default-input
+            label="Location"
+            formControlName="location"
+            inputId="location-id"
+            inputType="text"
+            [errors]="competitionErrors.location"
+        ></app-default-input>
+        <app-default-input
+            label="Date"
+            formControlName="date"
+            inputId="date-id"
+            inputType="text"
+            specialType="date"
+            [dateRules]="{ disablePast: true }"
+            [errors]="competitionErrors.date"
+        ></app-default-input>
+        <app-default-input
+            label="Starting time"
+            formControlName="startTime"
+            inputId="stating-time-id"
+            inputType="text"
+            specialType="datetime"
+            [dateRules]="{ datepicker: { min: minDate } }"
+            [errors]="competitionErrors.startTime"
+        ></app-default-input>
+        <app-default-input
+            label="Ending time"
+            formControlName="endTime"
+            inputId="ending-time-id"
+            inputType="text"
+            specialType="datetime"
+            [dateRules]="{ datepicker: { min: minDate } }"
+            [errors]="competitionErrors.endTime"
+        ></app-default-input>
+        <app-default-input
+            label="Amount"
+            formControlName="amount"
+            inputId="amount-id"
+            inputType="number"
+            [step]="0.01"
+            [errors]="competitionErrors.amount"
+        ></app-default-input>
+        <app-default-input
+            label="Max number of participants"
+            formControlName="numberOfParticipants"
+            inputId="participants-id"
+            inputType="number"
+            [errors]="competitionErrors.numberOfParticipants"
+        ></app-default-input>
+    </div>
+</app-modal-container>

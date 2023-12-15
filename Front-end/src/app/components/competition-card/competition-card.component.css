@@ -1,0 +1,11 @@
+.incoming {
+    @apply text-amber-700 bg-amber-300 border border-amber-600;
+}
+
+.ongoing {
+    @apply text-emerald-700 bg-emerald-300 border border-emerald-600;
+}
+
+.done {
+    @apply text-blue-700 bg-blue-300 border border-blue-600;
+}

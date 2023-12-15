@@ -71,36 +71,39 @@
             </label>
         </div>
         <div>
-            <app-default-button label="Button" type="button" btnStyle="secondary">
+            <app-default-button
+                type="button"
+                label="Add competition"
+                data-te-toggle="modal"
+                data-te-target="#competition-modal"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
                     viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="h-4 w-4 mr-1"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 mr-2"
                 >
                     <path
-                        fill-rule="evenodd"
-                        d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V10.5z"
-                        clip-rule="evenodd"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
                     />
                 </svg>
             </app-default-button>
         </div>
     </app-content-container-header>
     <div class="grid grid-cols-2 gap-4">
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
-        <app-competition-card></app-competition-card>
+        <ng-container *ngIf="!competitions; else content">
+            LOADING
+        </ng-container>
+        <ng-template #content>
+            <app-competition-card
+                *ngFor="let competition of competitions.data.content"
+                [competition]="competition"
+            ></app-competition-card>
+        </ng-template>
     </div>
     <nav class="flex justify-center items-center">
         <ul class="list-style-none flex">
@@ -144,4 +147,5 @@
             </li>
         </ul>
     </nav>
+    <app-create-competition></app-create-competition>
 </app-content-container>

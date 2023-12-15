@@ -11,6 +11,7 @@ export class DefaultButtonComponent implements OnInit {
     @Input() type: string = 'submit';
     @Input() label: string = '';
     @Input() btnStyle: BtnStyle = 'primary';
+    @Input() isLoading: boolean = false;
     @Output() onClick = new EventEmitter();
 
     btnClick(evt: MouseEvent) {

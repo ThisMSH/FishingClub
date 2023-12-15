@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './views/main/home/home.component';
 import { CompetitionsComponent } from './views/dashboard/competitions/competitions.component';
 import { CompetitionDetailsComponent } from './views/dashboard/competitions/competition-details/competition-details.component';
@@ -29,42 +30,51 @@ import { CompetitionInfoComponent } from './components/competition-info/competit
 import { CompetitionRankingComponent } from './components/competition-ranking/competition-ranking.component';
 import { CompetitionMemberComponent } from './components/competition-member/competition-member.component';
 import { CompetitionMemberDetailsComponent } from './components/utilities/other/competition-member-details/competition-member-details.component';
+import { ModalContainerComponent } from './components/modals/modal-container/modal-container.component';
+import { CreateCompetitionComponent } from './components/modals/create-competition/create-competition.component';
+import { ControlValueAccessorDirective } from './directives/control-value-accessor/control-value-accessor.directive';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    CompetitionsComponent,
-    CompetitionDetailsComponent,
-    MembersComponent,
-    MembersDetailsComponent,
-    LevelsComponent,
-    LevelsDetailsComponent,
-    FishesComponent,
-    FishDetailsComponent,
-    PageNotFoundComponent,
-    MainComponent,
-    DashboardComponent,
-    DashboardHeaderComponent,
-    DashboardSideBarComponent,
-    DefaultButtonComponent,
-    DarkModeComponent,
-    BreadcrumbComponent,
-    SideBarLinkComponent,
-    ContentContainerComponent,
-    ContentContainerHeaderComponent,
-    CompetitionCardComponent,
-    DefaultInputComponent,
-    CompetitionInfoComponent,
-    CompetitionRankingComponent,
-    CompetitionMemberComponent,
-    CompetitionMemberDetailsComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        CompetitionsComponent,
+        CompetitionDetailsComponent,
+        MembersComponent,
+        MembersDetailsComponent,
+        LevelsComponent,
+        LevelsDetailsComponent,
+        FishesComponent,
+        FishDetailsComponent,
+        PageNotFoundComponent,
+        MainComponent,
+        DashboardComponent,
+        DashboardHeaderComponent,
+        DashboardSideBarComponent,
+        DefaultButtonComponent,
+        DarkModeComponent,
+        BreadcrumbComponent,
+        SideBarLinkComponent,
+        ContentContainerComponent,
+        ContentContainerHeaderComponent,
+        CompetitionCardComponent,
+        DefaultInputComponent,
+        CompetitionInfoComponent,
+        CompetitionRankingComponent,
+        CompetitionMemberComponent,
+        CompetitionMemberDetailsComponent,
+        ModalContainerComponent,
+        CreateCompetitionComponent,
+        ControlValueAccessorDirective,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
