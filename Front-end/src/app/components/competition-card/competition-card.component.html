@@ -1,5 +1,5 @@
 <a
-    routerLink="a"
+    [routerLink]="competition.code"
     data-te-ripple-init
     data-te-ripple-color="light"
     class="block w-full p-4 relative text-neutral-50 rounded border border-neutral-300 dark:border-neutral-700 bg-[url('/assets/images/other/spearfisher.jpg')] bg-no-repeat bg-[length:100%] bg-center overflow-hidden transition-all duration-300 hover:border-neutral-300 hover:drop-shadow-black-sm hover:dark:drop-shadow-white-sm hover:bg-[length:110%] hover:bg-left before:absolute before:bg-gradient-to-b before:from-neutral-950/30 before:via-neutral-950/80 before:to-neutral-950 before:inset-0 before:z-0"
@@ -40,6 +40,6 @@
             <span>Number of participants:</span>
             {{ competition.numberOfParticipants }}
         </p>
-        <p><span>Amount:</span> {{ competition.amount }}</p>
+        <p><span>Amount:</span> {{ competition.amount | customCurrency : "DH"}}</p>
     </div>
 </a>

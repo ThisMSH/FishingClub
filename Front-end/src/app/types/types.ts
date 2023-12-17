@@ -9,7 +9,7 @@ export type BtnStyle =
     | 'success'
     | 'warning';
 
-export type InputType = 'text' | 'email' | 'password' | 'number' | 'date' | 'date-time' | 'time';
+export type InputType = 'text' | 'email' | 'password' | 'number' | 'date' | 'date-time' | 'time' | 'search';
 
 export type SpecialType = 'date' | 'time' | 'datetime';
 

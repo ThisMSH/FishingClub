@@ -1,0 +1,63 @@
+<nav class="flex justify-center items-center mt-6">
+    <ul class="list-style-none flex justify-center items-center gap-3">
+        <li>
+            <button
+                (click)="goToPage(currentPage - 1)"
+                type="button"
+                class="relative block rounded bg-transparent px-3 py-1.5 text-sm"
+                [ngClass]="{
+                    'pointer-events-none text-neutral-500 transition-all duration-300 dark:text-neutral-400':
+                        currentPage <= 0,
+                    'text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white':
+                        currentPage > 0
+                }"
+                [disabled]="currentPage <= 0"
+            >
+                Previous
+            </button>
+        </li>
+        <ng-template ngFor let-page [ngForOf]="pages">
+            <ng-container *ngIf="page !== currentPage; else ariaCurrent">
+                <li>
+                    <button
+                        (click)="goToPage(page)"
+                        type="button"
+                        class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+                    >
+                        {{ page + 1 }}
+                    </button>
+                </li>
+            </ng-container>
+            <ng-template #ariaCurrent>
+                <li aria-current="page">
+                    <button
+                        type="button"
+                        class="relative block rounded bg-primary-100 px-3 py-1.5 text-sm font-medium text-primary-700 transition-all duration-300"
+                    >
+                        {{ page + 1 }}
+                        <span
+                            class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
+                            >(current)</span
+                        >
+                    </button>
+                </li>
+            </ng-template>
+        </ng-template>
+        <li>
+            <button
+                (click)="goToPage(currentPage + 1)"
+                type="button"
+                class="relative block rounded bg-transparent px-3 py-1.5 text-sm"
+                [ngClass]="{
+                    'pointer-events-none text-neutral-500 transition-all duration-300 dark:text-neutral-400':
+                        currentPage >= pagesCount - 1,
+                    'text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white':
+                        currentPage < pagesCount - 1
+                }"
+                [disabled]="currentPage >= pagesCount - 1"
+            >
+                Next
+            </button>
+        </li>
+    </ul>
+</nav>

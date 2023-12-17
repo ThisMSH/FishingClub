@@ -1,7 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
 import { CompetitionRequest } from 'src/app/models/competition/competition-request';
+import { CompetitionResponse } from 'src/app/models/competition/competition-response';
 import { CompetitionService } from 'src/app/services/competition/competition.service';
 import { Modal, Ripple, Toast, initTE } from 'tw-elements';
 
@@ -11,8 +13,10 @@ import { Modal, Ripple, Toast, initTE } from 'tw-elements';
     styleUrls: ['./create-competition.component.css'],
 })
 export class CreateCompetitionComponent implements OnInit {
+    @Output() refreshCompetitionsList = new EventEmitter();
     private competitionService = inject(CompetitionService);
     private formBuilder = inject(FormBuilder);
+    private toast = inject(NgToastService);
     isLoading: boolean = false;
     minDate: Date = new Date();
 
@@ -48,7 +52,10 @@ export class CreateCompetitionComponent implements OnInit {
     };
 
     generateCode(location: string, date: string): string {
-        const codeOne: string = location.replace(' ', '').slice(0, 3).toLowerCase();
+        const codeOne: string = location
+            .replace(' ', '')
+            .slice(0, 3)
+            .toLowerCase();
         const codeTwo: string[] = date.split('-');
 
         return `${codeOne}-${codeTwo[2]}-${codeTwo[1]}-${codeTwo[0].slice(2, 4)}`;
@@ -65,11 +72,15 @@ export class CreateCompetitionComponent implements OnInit {
                 this.competitionForm.value.location as string,
                 this.competitionForm.value.date as string
             );
-            competitionReq.date = new Date(this.competitionForm.value.date as string).toISOString();
-            competitionReq.startTime = new Date(this.competitionForm.value.startTime as string).toISOString();
-            competitionReq.endTime = new Date(this.competitionForm.value.endTime as string).toISOString();
-
-            console.log(competitionReq);
+            competitionReq.date = new Date(
+                this.competitionForm.value.date as string
+            ).toISOString();
+            competitionReq.startTime = new Date(
+                this.competitionForm.value.startTime as string
+            ).toISOString();
+            competitionReq.endTime = new Date(
+                this.competitionForm.value.endTime as string
+            ).toISOString();
 
             this.competitionService
                 .createCompetition(
@@ -78,11 +89,22 @@ export class CreateCompetitionComponent implements OnInit {
                 .pipe(take(1))
                 .subscribe({
                     next: (c) => {
-                        console.log(c);
+                        this.refreshCompetitionsList.emit();
+
+                        this.toast.success({
+                            detail: 'Competition created',
+                            summary: c.message,
+                            duration: 5000,
+                        });
                     },
                     error: (err) => {
                         this.isLoading = false;
-                        console.log(err);
+
+                        this.toast.error({
+                            detail: 'Error occurred',
+                            summary: err.error.message,
+                            duration: 5000,
+                        });
                     },
                     complete: () => {
                         this.isLoading = false;
@@ -90,7 +112,12 @@ export class CreateCompetitionComponent implements OnInit {
                 });
         } else {
             this.isLoading = false;
-            console.log('Invalid form');
+
+            this.toast.warning({
+                detail: 'Invalid data',
+                summary: 'Please fill all the required fields.',
+                duration: 5000,
+            });
         }
     }
 

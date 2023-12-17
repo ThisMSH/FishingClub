@@ -28,6 +28,8 @@ export class CompetitionService {
         filter: CompetitionFilter,
         page: number = 0
     ): Observable<PaginationResponse<CompetitionResponse>> {
+        console.log(page);
+
         return this.http.get<PaginationResponse<CompetitionResponse>>(
             `${this.url}/competitions?page=${page}&size=${size}&sortBy=${sortBy}&sortOrder=${sortOrder}&filter=${filter}`
         );

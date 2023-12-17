@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NgToastModule } from 'ng-angular-popup'
 import { HomeComponent } from './views/main/home/home.component';
 import { CompetitionsComponent } from './views/dashboard/competitions/competitions.component';
 import { CompetitionDetailsComponent } from './views/dashboard/competitions/competition-details/competition-details.component';
@@ -33,6 +34,11 @@ import { CompetitionMemberDetailsComponent } from './components/utilities/other/
 import { ModalContainerComponent } from './components/modals/modal-container/modal-container.component';
 import { CreateCompetitionComponent } from './components/modals/create-competition/create-competition.component';
 import { ControlValueAccessorDirective } from './directives/control-value-accessor/control-value-accessor.directive';
+import { CustomCurrencyPipe } from './pipes/custom-currency/custom-currency.pipe';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { TwoWayInputComponent } from './components/utilities/elements/two-way-input/two-way-input.component';
+import { SpinnerComponent } from './components/utilities/other/spinner/spinner.component';
+import { LoadingOrOtherContainerComponent } from './components/utilities/other/loading-or-other-container/loading-or-other-container.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +72,11 @@ import { ControlValueAccessorDirective } from './directives/control-value-access
         ModalContainerComponent,
         CreateCompetitionComponent,
         ControlValueAccessorDirective,
+        CustomCurrencyPipe,
+        PaginationComponent,
+        TwoWayInputComponent,
+        SpinnerComponent,
+        LoadingOrOtherContainerComponent,
     ],
     imports: [
         BrowserModule,
@@ -73,6 +84,7 @@ import { ControlValueAccessorDirective } from './directives/control-value-access
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
+        NgToastModule
     ],
     providers: [],
     bootstrap: [AppComponent],
