@@ -88,22 +88,31 @@ export class CompetitionsComponent implements OnInit {
     }
 
     setSize(evt: any): void {
-        this.competitionParams = { ...this.competitionParams, size: evt.size };
+        const { page, filter, ...params } = {
+            ...this.competitionParams,
+            size: evt.size,
+        };
+        const newParams = { ...params, page: 0, filter: filter };
+
+        console.log(filter);
+
         localStorage.setItem(
             'competitionParams',
-            JSON.stringify(this.competitionParams)
+            JSON.stringify({ ...params, filter: 'ALL' })
         );
 
-        this.getAllCompetitions(this.competitionParams);
+        this.getAllCompetitions(newParams);
     }
 
     setFilter(evt: any): void {
         this.currentFilter = evt.item;
-        this.competitionParams = { ...this.competitionParams, filter: evt.item };
+        this.competitionParams = { ...this.competitionParams, filter: evt.item, page: 0 };
         this.getAllCompetitions(this.competitionParams);
     }
 
     getAllCompetitions(params: PaginationParams): void {
+        console.log(params);
+
         this.isLoading = true;
         const { size, sortBy, sortOrder, filter, page } = params;
         let p;
