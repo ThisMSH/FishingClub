@@ -10,6 +10,8 @@ export class ModalContainerComponent {
     @Input() title!: string;
     @Input() modalId!: string;
     @Input() titleId!: string;
+    @Input() submitLabel!: string;
+    @Input() cancelLabel!: string;
     @Input() isLoading: boolean = false;
     @Input() formGroup!: FormGroup;
     @Output() onSubmit = new EventEmitter();

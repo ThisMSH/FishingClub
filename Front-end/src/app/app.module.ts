@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgToastModule } from 'ng-angular-popup'
+import { NgToastModule } from 'ng-angular-popup';
 import { HomeComponent } from './views/main/home/home.component';
 import { CompetitionsComponent } from './views/dashboard/competitions/competitions.component';
 import { CompetitionDetailsComponent } from './views/dashboard/competitions/competition-details/competition-details.component';
@@ -41,6 +41,7 @@ import { SpinnerComponent } from './components/utilities/other/spinner/spinner.c
 import { LoadingOrOtherContainerComponent } from './components/utilities/other/loading-or-other-container/loading-or-other-container.component';
 import { TwoWaySelectInputComponent } from './components/utilities/elements/two-way-select-input/two-way-select-input.component';
 import { DefaultDropdownComponent } from './components/utilities/elements/default-dropdown/default-dropdown.component';
+import { UpdateCompetitionComponent } from './components/modals/update-competition/update-competition.component';
 
 @NgModule({
     declarations: [
@@ -81,6 +82,7 @@ import { DefaultDropdownComponent } from './components/utilities/elements/defaul
         LoadingOrOtherContainerComponent,
         TwoWaySelectInputComponent,
         DefaultDropdownComponent,
+        UpdateCompetitionComponent,
     ],
     imports: [
         BrowserModule,
@@ -88,7 +90,7 @@ import { DefaultDropdownComponent } from './components/utilities/elements/defaul
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        NgToastModule
+        NgToastModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

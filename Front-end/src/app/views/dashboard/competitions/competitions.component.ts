@@ -89,10 +89,8 @@ export class CompetitionsComponent implements OnInit {
     }
 
     setSize(evt: any): void {
-        const { page, filter, ...params } = {
-            ...this.competitionParams,
-            size: evt.size,
-        };
+        this.competitionParams.size = evt.size;
+        const { page, filter, ...params } = { ...this.competitionParams };
         const newParams = { ...params, page: 0, filter: filter };
 
         localStorage.setItem(
@@ -105,7 +103,11 @@ export class CompetitionsComponent implements OnInit {
 
     setFilter(evt: any): void {
         this.currentFilter = evt.item;
-        this.competitionParams = { ...this.competitionParams, filter: evt.item, page: 0 };
+        this.competitionParams = {
+            ...this.competitionParams,
+            filter: evt.item,
+            page: 0,
+        };
         this.getAllCompetitions(this.competitionParams);
     }
 
@@ -138,7 +140,7 @@ export class CompetitionsComponent implements OnInit {
                     this.toast.error({
                         detail: 'Error occured',
                         summary: err.error.message,
-                        duration: 6000
+                        duration: 6000,
                     });
                     this.isLoading = false;
                 },
