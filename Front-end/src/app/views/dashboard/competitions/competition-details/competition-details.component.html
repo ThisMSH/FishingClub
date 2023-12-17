@@ -1,72 +1,94 @@
 <app-content-container>
-    <ul
-        class="mb-5 text-sm flex list-none flex-row flex-wrap border-b-0 pl-0 child:flex-grow child:basis-0 child:text-center"
-        role="tablist"
-        data-te-nav-ref
-    >
-        <li role="presentation">
-            <a
-                href="#tabs-competition"
-                class="rounded-tl-md my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary dark:text-neutral-400 dark:hover:bg-neutral-700 dark:data-[te-nav-active]:border-primary-400 dark:data-[te-nav-active]:text-primary-400"
-                data-te-toggle="pill"
-                data-te-target="#tabs-competition"
-                data-te-nav-active
-                role="tab"
-                aria-controls="tabs-competition"
-                aria-selected="true"
-                >Competition info</a
+    <ng-container *ngIf="isLoading; else content">
+        <app-loading-or-other-container>
+            <div
+                class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status"
             >
-        </li>
-        <li role="presentation">
-            <a
-                href="#tabs-participants"
-                class="my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary dark:text-neutral-400 dark:hover:bg-neutral-700 dark:data-[te-nav-active]:border-primary-400 dark:data-[te-nav-active]:text-primary-400"
-                data-te-toggle="pill"
-                data-te-target="#tabs-participants"
-                role="tab"
-                aria-controls="tabs-participants"
-                aria-selected="false"
-                >Participants</a
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                    >Loading...</span
+                >
+            </div>
+        </app-loading-or-other-container>
+    </ng-container>
+    <ng-template #content>
+        <ng-container *ngIf="!competition; else competitionContent">
+            <app-loading-or-other-container>
+                <p>No competition found with the code "{{ code }}".</p>
+            </app-loading-or-other-container>
+        </ng-container>
+        <ng-template #competitionContent>
+            <ul
+                class="mb-5 text-sm flex list-none flex-row flex-wrap border-b-0 pl-0 child:flex-grow child:basis-0 child:text-center"
+                role="tablist"
+                data-te-nav-ref
             >
-        </li>
-        <li role="presentation">
-            <a
-                href="#tabs-ranking"
-                class="rounded-tr-md my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary dark:text-neutral-400 dark:hover:bg-neutral-700 dark:data-[te-nav-active]:border-primary-400 dark:data-[te-nav-active]:text-primary-400"
-                data-te-toggle="pill"
-                data-te-target="#tabs-ranking"
-                role="tab"
-                aria-controls="tabs-ranking"
-                aria-selected="false"
-                >Ranking</a
-            >
-        </li>
-    </ul>
-    <div class="mb-6">
-        <div
-            class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
-            id="tabs-competition"
-            role="tabpanel"
-            aria-labelledby="tabs-competition-tab"
-            data-te-tab-active
-        >
-            <app-competition-info></app-competition-info>
-        </div>
-        <div
-            class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
-            id="tabs-participants"
-            role="tabpanel"
-            aria-labelledby="tabs-participants-tab"
-        >
-            <app-competition-member></app-competition-member>
-        </div>
-        <div
-            class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
-            id="tabs-ranking"
-            role="tabpanel"
-            aria-labelledby="tabs-ranking-tab"
-        >
-            Tab 3 content
-        </div>
-    </div>
+                <li role="presentation">
+                    <a
+                        href="#tabs-competition"
+                        class="rounded-tl-md my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary dark:text-neutral-400 dark:hover:bg-neutral-700 dark:data-[te-nav-active]:border-primary-400 dark:data-[te-nav-active]:text-primary-400"
+                        data-te-toggle="pill"
+                        data-te-target="#tabs-competition"
+                        data-te-nav-active
+                        role="tab"
+                        aria-controls="tabs-competition"
+                        aria-selected="true"
+                        >Competition info</a
+                    >
+                </li>
+                <li role="presentation">
+                    <a
+                        href="#tabs-participants"
+                        class="my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary dark:text-neutral-400 dark:hover:bg-neutral-700 dark:data-[te-nav-active]:border-primary-400 dark:data-[te-nav-active]:text-primary-400"
+                        data-te-toggle="pill"
+                        data-te-target="#tabs-participants"
+                        role="tab"
+                        aria-controls="tabs-participants"
+                        aria-selected="false"
+                        >Participants</a
+                    >
+                </li>
+                <li role="presentation">
+                    <a
+                        href="#tabs-ranking"
+                        class="rounded-tr-md my-2 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary dark:text-neutral-400 dark:hover:bg-neutral-700 dark:data-[te-nav-active]:border-primary-400 dark:data-[te-nav-active]:text-primary-400"
+                        data-te-toggle="pill"
+                        data-te-target="#tabs-ranking"
+                        role="tab"
+                        aria-controls="tabs-ranking"
+                        aria-selected="false"
+                        >Ranking</a
+                    >
+                </li>
+            </ul>
+            <div class="mb-6">
+                <div
+                    class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+                    id="tabs-competition"
+                    role="tabpanel"
+                    aria-labelledby="tabs-competition-tab"
+                    data-te-tab-active
+                >
+                    <app-competition-info *ngIf="competition" [competition]="competition"></app-competition-info>
+                </div>
+                <div
+                    class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+                    id="tabs-participants"
+                    role="tabpanel"
+                    aria-labelledby="tabs-participants-tab"
+                >
+                    <app-competition-member></app-competition-member>
+                </div>
+                <div
+                    class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+                    id="tabs-ranking"
+                    role="tabpanel"
+                    aria-labelledby="tabs-ranking-tab"
+                >
+                    Tab 3 content
+                </div>
+            </div>
+        </ng-template>
+    </ng-template>
 </app-content-container>

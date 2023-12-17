@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
 import { CompetitionResponse } from 'src/app/models/competition/competition-response';
 import { PaginationResponse } from 'src/app/models/response/pagination-response';
@@ -13,6 +14,7 @@ import { Dropdown, Input, initTE } from 'tw-elements';
 })
 export class CompetitionsComponent implements OnInit {
     private competitionService = inject(CompetitionService);
+    private toast = inject(NgToastService);
     competitions!: PaginationResponse<CompetitionResponse>;
     competitionsArray!: CompetitionResponse[];
     competitionParams!: PaginationParams;
@@ -48,7 +50,6 @@ export class CompetitionsComponent implements OnInit {
                             this.competitionsArray = [];
                         }
 
-                        console.log(err);
                         this.isLoading = false;
                     },
                     complete: () => {
@@ -94,8 +95,6 @@ export class CompetitionsComponent implements OnInit {
         };
         const newParams = { ...params, page: 0, filter: filter };
 
-        console.log(filter);
-
         localStorage.setItem(
             'competitionParams',
             JSON.stringify({ ...params, filter: 'ALL' })
@@ -111,11 +110,9 @@ export class CompetitionsComponent implements OnInit {
     }
 
     getAllCompetitions(params: PaginationParams): void {
-        console.log(params);
-
-        this.isLoading = true;
         const { size, sortBy, sortOrder, filter, page } = params;
         let p;
+        this.isLoading = true;
 
         if (!page) {
             p = 0;
@@ -138,7 +135,12 @@ export class CompetitionsComponent implements OnInit {
                     this.competitionsArray = c.data.content;
                 },
                 error: (err) => {
-                    console.log(err);
+                    this.toast.error({
+                        detail: 'Error occured',
+                        summary: err.error.message,
+                        duration: 6000
+                    });
+                    this.isLoading = false;
                 },
                 complete: () => {
                     this.isLoading = false;
