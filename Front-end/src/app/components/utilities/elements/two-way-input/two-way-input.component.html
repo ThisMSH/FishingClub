@@ -7,6 +7,7 @@
         [attr.data-te-input-showcounter]="!!maxLength"
         [attr.maxlength]="maxLength"
         [required]="isRequired"
+        [disabled]="isDisabled"
         [ngModel]="value"
         (ngModelChange)="onValueChange($event)"
     />

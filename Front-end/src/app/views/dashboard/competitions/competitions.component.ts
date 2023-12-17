@@ -16,8 +16,17 @@ export class CompetitionsComponent implements OnInit {
     competitions!: PaginationResponse<CompetitionResponse>;
     competitionsArray!: CompetitionResponse[];
     competitionParams!: PaginationParams;
-    isLoading: boolean = true;
     search!: string;
+    isLoading: boolean = true;
+    size!: number;
+    sizeOptions: Record<string, number> = {
+        '04': 4,
+        '08': 8,
+        '12': 12,
+        '16': 16,
+        '20': 20,
+        '24': 24,
+    };
 
     searchFn(): void {
         this.isLoading = true;
@@ -28,7 +37,9 @@ export class CompetitionsComponent implements OnInit {
                 .pipe(take(1))
                 .subscribe({
                     next: (c) => {
-                        this.competitionsArray = [c.data as CompetitionResponse];
+                        this.competitionsArray = [
+                            c.data as CompetitionResponse,
+                        ];
                     },
                     error: (err) => {
                         if (err.error.status === 404) {
@@ -40,8 +51,8 @@ export class CompetitionsComponent implements OnInit {
                     },
                     complete: () => {
                         this.isLoading = false;
-                    }
-                })
+                    },
+                });
         } else {
             this.competitionsArray = [];
             this.getAllCompetitions(this.competitionParams);
@@ -65,12 +76,22 @@ export class CompetitionsComponent implements OnInit {
         } else {
             this.competitionParams = JSON.parse(storedParams as string);
         }
+
+        this.size = this.competitionParams.size as number;
     }
 
     goToPage(evt: any): void {
-        console.log(evt.p);
         this.competitionParams = { ...this.competitionParams, page: evt.p };
-        console.log(this.competitionParams);
+        this.getAllCompetitions(this.competitionParams);
+    }
+
+    setSize(evt: any): void {
+        this.competitionParams = { ...this.competitionParams, size: evt.size };
+        localStorage.setItem(
+            'competitionParams',
+            JSON.stringify(this.competitionParams)
+        );
+
         this.getAllCompetitions(this.competitionParams);
     }
 

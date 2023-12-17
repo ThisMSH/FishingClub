@@ -39,6 +39,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { TwoWayInputComponent } from './components/utilities/elements/two-way-input/two-way-input.component';
 import { SpinnerComponent } from './components/utilities/other/spinner/spinner.component';
 import { LoadingOrOtherContainerComponent } from './components/utilities/other/loading-or-other-container/loading-or-other-container.component';
+import { TwoWaySelectInputComponent } from './components/utilities/elements/two-way-select-input/two-way-select-input.component';
 
 @NgModule({
     declarations: [
@@ -77,6 +78,7 @@ import { LoadingOrOtherContainerComponent } from './components/utilities/other/l
         TwoWayInputComponent,
         SpinnerComponent,
         LoadingOrOtherContainerComponent,
+        TwoWaySelectInputComponent,
     ],
     imports: [
         BrowserModule,

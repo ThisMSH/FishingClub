@@ -139,6 +139,11 @@
         *ngIf="competitions && competitionsArray.length > 1"
         [pagesCount]="competitions.data.totalPages"
         [currentPage]="competitions.data.number"
+        [sizeOptions]="sizeOptions"
+        sizeId="competitions-page-size"
+        sizeLabel="Size"
+        [size]="size"
+        (sizeChange)="setSize($event)"
         (emitPage)="goToPage($event)"
     ></app-pagination>
     <app-create-competition

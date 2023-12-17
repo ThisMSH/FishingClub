@@ -1,4 +1,4 @@
-<nav class="flex justify-center items-center mt-6">
+<nav class="flex justify-center items-center gap-6 mt-6">
     <ul class="list-style-none flex justify-center items-center gap-3">
         <li>
             <button
@@ -60,4 +60,12 @@
             </button>
         </li>
     </ul>
+    <app-two-way-select-input
+        [isDisabled]="sizeDisabled"
+        [selectId]="sizeId"
+        [label]="sizeLabel"
+        [options]="sizeOptions"
+        [value]="size"
+        (valueChange)="pageSize($event)"
+    ></app-two-way-select-input>
 </nav>

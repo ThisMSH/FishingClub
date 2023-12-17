@@ -1,0 +1,17 @@
+<select
+    [id]="selectId"
+    [required]="isRequired"
+    [disabled]="isDisabled"
+    data-te-select-init
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+>
+    <option
+        *ngFor="let item of options | keyvalue"
+        [value]="item.value"
+        [selected]="value === item.value"
+    >
+        {{ item.key }}
+    </option>
+</select>
+<label data-te-select-label-ref>{{ label }}</label>

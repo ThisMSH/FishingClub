@@ -13,6 +13,7 @@ export class TwoWayInputComponent {
     @Input() label!: string;
     @Input() maxLength!: number;
     @Input() isRequired: boolean = false;
+    @Input() isDisabled: boolean = false;
     @Output() valueChange = new EventEmitter<string>();
 
     onValueChange(evt: string): void {
