@@ -78,6 +78,7 @@ public class CompetitionService implements ICompetitionService {
         competition.setStartTime(competitionDTO.getStartTime());
         competition.setEndTime(competitionDTO.getEndTime());
         competition.setAmount(competitionDTO.getAmount());
+        competition.setNumberOfParticipants(competitionDTO.getNumberOfParticipants());
 
         Competition updatedCompetition = competitionRepository.save(competition);
 
