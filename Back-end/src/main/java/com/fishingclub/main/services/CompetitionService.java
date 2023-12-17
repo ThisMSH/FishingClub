@@ -113,21 +113,17 @@ public class CompetitionService implements ICompetitionService {
         Page<CompetitionDTO> competitions = null;
         Pageable pageable = Utilities.managePagination((Integer) params.get("page"), (Integer) params.get("size"), (String) params.get("sortBy"), (String) params.get("sortOrder"));
 
-        if (params.get("filter") == CompetitionFilterType.ALL)
-        {
+        if (params.get("filter") == CompetitionFilterType.ALL) {
             Utilities<CompetitionDTO, Competition, String> utils = new Utilities<>(modelMapper, competitionRepository);
             competitions = utils.getAllContents(params, CompetitionDTO.class);
-        } else if (params.get("filter") == CompetitionFilterType.ONGOING)
-        {
-            Page<Competition> contents = competitionRepository.findAllByStartTimeAfterAndEndTimeBefore(LocalDateTime.now(), LocalDateTime.now(), pageable);
+        } else if (params.get("filter") == CompetitionFilterType.ONGOING) {
+            Page<Competition> contents = competitionRepository.findAllByStartTimeBeforeAndEndTimeAfter(LocalDateTime.now(), LocalDateTime.now(), pageable);
             competitions = contents.map(c -> modelMapper.map(c, CompetitionDTO.class));
-        } else if (params.get("filter") == CompetitionFilterType.DONE)
-        {
-            Page<Competition> contents = competitionRepository.findAllByStartTimeBefore(LocalDateTime.now(), pageable);
+        } else if (params.get("filter") == CompetitionFilterType.DONE) {
+            Page<Competition> contents = competitionRepository.findAllByEndTimeBefore(LocalDateTime.now(), pageable);
             competitions = contents.map(c -> modelMapper.map(c, CompetitionDTO.class));
-        } else if (params.get("filter") == CompetitionFilterType.INCOMING)
-        {
-            Page<Competition> contents = competitionRepository.findAllByEndTimeAfter(LocalDateTime.now(), pageable);
+        } else if (params.get("filter") == CompetitionFilterType.INCOMING) {
+            Page<Competition> contents = competitionRepository.findAllByStartTimeAfter(LocalDateTime.now(), pageable);
             competitions = contents.map(c -> modelMapper.map(c, CompetitionDTO.class));
         }
 

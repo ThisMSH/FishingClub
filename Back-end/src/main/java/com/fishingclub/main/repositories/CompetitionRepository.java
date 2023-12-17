@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 public interface CompetitionRepository extends JpaRepository<Competition, String> {
     Boolean existsByDate(LocalDate date);
-    Page<Competition> findAllByStartTimeBefore(LocalDateTime startTime, Pageable pageable);
-    Page<Competition> findAllByEndTimeAfter(LocalDateTime endTime, Pageable pageable);
-    Page<Competition> findAllByStartTimeAfterAndEndTimeBefore(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+    Page<Competition> findAllByEndTimeBefore(LocalDateTime startTime, Pageable pageable);
+    Page<Competition> findAllByStartTimeAfter(LocalDateTime endTime, Pageable pageable);
+    Page<Competition> findAllByStartTimeBeforeAndEndTimeAfter(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 }
