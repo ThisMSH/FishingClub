@@ -27,6 +27,8 @@ export class CompetitionsComponent implements OnInit {
         '20': 20,
         '24': 24,
     };
+    filter: CompetitionFilter[] = ['ALL', 'INCOMING', 'ONGOING', 'DONE'];
+    currentFilter: CompetitionFilter = 'ALL';
 
     searchFn(): void {
         this.isLoading = true;
@@ -92,6 +94,12 @@ export class CompetitionsComponent implements OnInit {
             JSON.stringify(this.competitionParams)
         );
 
+        this.getAllCompetitions(this.competitionParams);
+    }
+
+    setFilter(evt: any): void {
+        this.currentFilter = evt.item;
+        this.competitionParams = { ...this.competitionParams, filter: evt.item };
         this.getAllCompetitions(this.competitionParams);
     }
 

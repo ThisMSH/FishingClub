@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.css'],
 })
-export class PaginationComponent implements OnInit, OnChanges {
+export class PaginationComponent implements OnChanges {
     @Input() pagesCount: number = 0;
     @Input() currentPage!: number;
     @Input() sizeLabel!: string;
@@ -23,10 +23,6 @@ export class PaginationComponent implements OnInit, OnChanges {
 
     pageSize(size: number | string): void {
         this.sizeChange.emit({size});
-    }
-
-    ngOnInit(): void {
-        this.pages = Array.from(Array(this.pagesCount).keys());
     }
 
     ngOnChanges(changes: SimpleChanges): void {

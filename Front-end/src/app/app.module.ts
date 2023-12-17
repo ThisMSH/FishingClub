@@ -40,6 +40,7 @@ import { TwoWayInputComponent } from './components/utilities/elements/two-way-in
 import { SpinnerComponent } from './components/utilities/other/spinner/spinner.component';
 import { LoadingOrOtherContainerComponent } from './components/utilities/other/loading-or-other-container/loading-or-other-container.component';
 import { TwoWaySelectInputComponent } from './components/utilities/elements/two-way-select-input/two-way-select-input.component';
+import { DefaultDropdownComponent } from './components/utilities/elements/default-dropdown/default-dropdown.component';
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { TwoWaySelectInputComponent } from './components/utilities/elements/two-
         SpinnerComponent,
         LoadingOrOtherContainerComponent,
         TwoWaySelectInputComponent,
+        DefaultDropdownComponent,
     ],
     imports: [
         BrowserModule,

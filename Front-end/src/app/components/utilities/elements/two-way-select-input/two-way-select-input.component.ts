@@ -20,6 +20,6 @@ export class TwoWaySelectInputComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        initTE({ Select });
+        initTE({ Select }, { allowReinits: true });
     }
 }
