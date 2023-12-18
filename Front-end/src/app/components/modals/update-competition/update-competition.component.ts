@@ -33,7 +33,7 @@ export class UpdateCompetitionComponent implements OnInit {
     private toast = inject(NgToastService);
     datePipe = inject(DatePipe);
     isLoading: boolean = false;
-    tzoffset: number = environment.timeZoneOffset;
+    tzOffset: number = environment.timeZoneOffset;
 
     competitionForm: FormGroup = this.formBuilder.group({
         startTime: ['', Validators.required],
@@ -66,10 +66,10 @@ export class UpdateCompetitionComponent implements OnInit {
             startTime.setMinutes(newStartTime[1]);
 
             competitionReq.startTime = new Date(
-                startTime.getTime() - this.tzoffset
+                startTime.getTime() - this.tzOffset
             ).toISOString();
             competitionReq.endTime = new Date(
-                endTime.getTime() - this.tzoffset
+                endTime.getTime() - this.tzOffset
             ).toISOString();
             competitionReq.code = this.competition.code;
             competitionReq.location = this.competition.location;

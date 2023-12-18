@@ -10,6 +10,7 @@
             type="button"
             label="Delete"
             btnStyle="danger"
+            (onClick)="deleteModal.showModal = !deleteModal.showModal"
         ></app-default-button>
     </div>
     <div
@@ -191,4 +192,12 @@
         [competition]="competition"
         (refreshCompetitionInfo)="setCompetition($event)"
     ></app-update-competition>
+    <app-delete-modal (confirmDelete)="deleteCompetition()" [deleteLoading]="deleteLoading">
+        <p class="text-xl font-medium">
+            ARE YOU SURE THAT YOU WANT TO DELETE THE COMPETITION "<span
+                class="font-bold"
+                >{{ competition.code }}</span
+            >",
+        </p>
+    </app-delete-modal>
 </div>

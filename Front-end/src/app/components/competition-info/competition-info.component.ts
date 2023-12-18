@@ -1,6 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { CompetitionResponse } from 'src/app/models/competition/competition-response';
-import { Response } from 'src/app/models/response/response';
+import { DeleteModalComponent } from '../modals/delete-modal/delete-modal.component';
+import { CompetitionService } from 'src/app/services/competition/competition.service';
+import { take } from 'rxjs';
+import { NgToastService } from 'ng-angular-popup';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-competition-info',
@@ -8,8 +12,13 @@ import { Response } from 'src/app/models/response/response';
     styleUrls: ['./competition-info.component.css'],
 })
 export class CompetitionInfoComponent implements OnInit {
+    @ViewChild(DeleteModalComponent) deleteModal!: DeleteModalComponent;
     @Input() competition!: CompetitionResponse;
+    private competitionService = inject(CompetitionService);
+    private router = inject(Router);
+    toast = inject(NgToastService);
     status!: string;
+    deleteLoading: boolean = false;
 
     competitionStatus(): void {
         const now = new Date();
@@ -27,7 +36,39 @@ export class CompetitionInfoComponent implements OnInit {
 
     setCompetition(evt: any): void {
         this.competition = evt.c.data as CompetitionResponse;
+    }
 
+    deleteCompetition(): void {
+        this.deleteLoading = true;
+
+        this.competitionService
+            .deleteCompetition(this.competition.code as string)
+            .pipe(take(1))
+            .subscribe({
+                next: (c) => {
+                    this.toast.success({
+                        detail: 'Competition deleted',
+                        summary: `The competition '${
+                            (c.data as CompetitionResponse).code
+                        }' has been deleted successfully.`,
+                        duration: 6000,
+                    });
+
+                    this.router.navigate(['/dashboard/competitions']);
+                },
+                error: (err) => {
+                    this.deleteLoading = false;
+
+                    this.toast.success({
+                        detail: 'Error occurred',
+                        summary: err.error.message,
+                        duration: 6000,
+                    });
+                },
+                complete: () => {
+                    this.deleteLoading = false;
+                },
+            });
     }
 
     ngOnInit(): void {

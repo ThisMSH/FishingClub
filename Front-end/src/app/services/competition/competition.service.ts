@@ -50,4 +50,10 @@ export class CompetitionService {
             competition
         );
     }
+
+    deleteCompetition(code: string): Observable<Response<CompetitionResponse>> {
+        return this.http.delete<Response<CompetitionResponse>>(
+            `${this.url}/competitions/delete/${code}`
+        );
+    }
 }

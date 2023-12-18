@@ -1,0 +1,45 @@
+<div
+    *ngIf="showModal"
+    class="px-12 py-8 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-neutral-200 dark:bg-neutral-700 rounded-xl border border-neutral-400 dark:border-neutral-500 z-[500]"
+>
+    <div class="w-[550px] flex flex-col items-center gap-6">
+        <div
+            id="delete-content"
+            class="flex flex-col items-center gap-4 text-center"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-32 h-32 text-red-600 dark:text-red-500"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                />
+            </svg>
+            <ng-content></ng-content>
+        </div>
+        <div class="flex justify-center items-center gap-6">
+            <app-default-button
+                (onClick)="showModal = !showModal"
+                btnStyle="secondary"
+                label="No, cancel"
+            ></app-default-button>
+            <app-default-button
+                [isLoading]="deleteLoading"
+                (onClick)="onConfirm()"
+                btnStyle="danger"
+                label="Yes, I'm sure"
+            ></app-default-button>
+        </div>
+    </div>
+</div>
+<div
+    *ngIf="showModal"
+    (click)="showModal = !showModal"
+    class="fixed top-0 left-0 w-full h-full backdrop-blur-sm z-[490]"
+></div>

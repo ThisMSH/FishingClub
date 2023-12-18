@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
 import { CompetitionRequest } from 'src/app/models/competition/competition-request';
 import { CompetitionService } from 'src/app/services/competition/competition.service';
+import { environment } from 'src/environments/environment.development';
+import { ModalContainerComponent } from '../modal-container/modal-container.component';
 
 @Component({
     selector: 'app-create-competition',
@@ -11,11 +13,13 @@ import { CompetitionService } from 'src/app/services/competition/competition.ser
     styleUrls: ['./create-competition.component.css'],
 })
 export class CreateCompetitionComponent {
+    @ViewChild(ModalContainerComponent) modalContainer!: ModalContainerComponent;
     @Output() refreshCompetitionsList = new EventEmitter();
     private competitionService = inject(CompetitionService);
     private formBuilder = inject(FormBuilder);
     private toast = inject(NgToastService);
     isLoading: boolean = false;
+    tzOffset: number = environment.timeZoneOffset;
     minDate: Date = new Date();
 
     competitionForm: FormGroup = this.formBuilder.group({
@@ -74,10 +78,10 @@ export class CreateCompetitionComponent {
                 this.competitionForm.value.date as string
             ).toISOString();
             competitionReq.startTime = new Date(
-                this.competitionForm.value.startTime as string
+                new Date(this.competitionForm.value.startTime as string).getTime() - this.tzOffset
             ).toISOString();
             competitionReq.endTime = new Date(
-                this.competitionForm.value.endTime as string
+                new Date(this.competitionForm.value.endTime as string).getTime() - this.tzOffset
             ).toISOString();
 
             this.competitionService
@@ -94,6 +98,8 @@ export class CreateCompetitionComponent {
                             summary: c.message,
                             duration: 5000,
                         });
+
+                        this.modalContainer.closeModal();
                     },
                     error: (err) => {
                         this.isLoading = false;

@@ -20,6 +20,7 @@ export class CompetitionsComponent implements OnInit {
     competitionParams!: PaginationParams;
     search!: string;
     isLoading: boolean = true;
+    showPagination: boolean = true;
     size!: number;
     sizeOptions: Record<string, number> = {
         '04': 4,
@@ -44,6 +45,8 @@ export class CompetitionsComponent implements OnInit {
                         this.competitionsArray = [
                             c.data as CompetitionResponse,
                         ];
+
+                        this.showPagination = false;
                     },
                     error: (err) => {
                         if (err.error.status === 404) {
@@ -115,6 +118,7 @@ export class CompetitionsComponent implements OnInit {
         const { size, sortBy, sortOrder, filter, page } = params;
         let p;
         this.isLoading = true;
+        this.showPagination = true;
 
         if (!page) {
             p = 0;

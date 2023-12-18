@@ -86,7 +86,7 @@
         </ng-template>
     </div>
     <app-pagination
-        *ngIf="competitions && competitionsArray.length > 1"
+        *ngIf="competitions && showPagination"
         [pagesCount]="competitions.data.totalPages"
         [currentPage]="competitions.data.number"
         [sizeOptions]="sizeOptions"
