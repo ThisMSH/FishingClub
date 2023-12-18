@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Modal, Ripple, initTE } from 'tw-elements';
 
@@ -8,6 +8,7 @@ import { Modal, Ripple, initTE } from 'tw-elements';
   styleUrls: ['./modal-container.component.css']
 })
 export class ModalContainerComponent implements OnInit {
+    @ViewChild('closeModal') closeModalBtn!: ElementRef;
     @Input() title!: string;
     @Input() modalId!: string;
     @Input() titleId!: string;
@@ -19,6 +20,10 @@ export class ModalContainerComponent implements OnInit {
 
     formSubmit(): void {
         this.onSubmit.emit();
+    }
+
+    closeModal(): void {
+        this.closeModalBtn.nativeElement.click();
     }
 
     ngOnInit(): void {

@@ -5,6 +5,7 @@ import {
     Input as NgInput,
     OnInit,
     Output,
+    ViewChild,
     inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,6 +15,8 @@ import { CompetitionRequest } from 'src/app/models/competition/competition-reque
 import { CompetitionResponse } from 'src/app/models/competition/competition-response';
 import { CompetitionService } from 'src/app/services/competition/competition.service';
 import { Input, initTE } from 'tw-elements';
+import { ModalContainerComponent } from '../modal-container/modal-container.component';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
     selector: 'app-update-competition',
@@ -23,20 +26,20 @@ import { Input, initTE } from 'tw-elements';
 export class UpdateCompetitionComponent implements OnInit {
     @NgInput() competition!: CompetitionResponse;
     @Output() refreshCompetitionInfo = new EventEmitter();
+    @ViewChild(ModalContainerComponent)
+    modalContainer!: ModalContainerComponent;
     private competitionService = inject(CompetitionService);
     private formBuilder = inject(FormBuilder);
     private toast = inject(NgToastService);
     datePipe = inject(DatePipe);
     isLoading: boolean = false;
+    tzoffset: number = environment.timeZoneOffset;
 
     competitionForm: FormGroup = this.formBuilder.group({
         startTime: ['', Validators.required],
         endTime: ['', Validators.required],
         amount: ['', Validators.required],
-        numberOfParticipants: [
-            '',
-            Validators.required,
-        ],
+        numberOfParticipants: ['', Validators.required],
     });
 
     competitionErrors = {
@@ -49,21 +52,30 @@ export class UpdateCompetitionComponent implements OnInit {
     };
 
     onSubmit(): void {
-        // this.isLoading = true;
+        this.isLoading = true;
 
         if (this.competitionForm.valid) {
             const competitionReq: CompetitionRequest = this.competitionForm
                 .value as unknown as CompetitionRequest;
             const startTime = new Date(this.competition.startTime);
-            const newStartTime = this.competitionForm.value.startTime.split(':');
+            const endTime = new Date(this.competitionForm.value.endTime);
+            const newStartTime =
+                this.competitionForm.value.startTime.split(':');
 
             startTime.setHours(newStartTime[0]);
             startTime.setMinutes(newStartTime[1]);
 
-            competitionReq.startTime = startTime.toISOString();
-            competitionReq.endTime = new Date(
-                this.competitionForm.value.endTime as string
+            competitionReq.startTime = new Date(
+                startTime.getTime() - this.tzoffset
             ).toISOString();
+            competitionReq.endTime = new Date(
+                endTime.getTime() - this.tzoffset
+            ).toISOString();
+            competitionReq.code = this.competition.code;
+            competitionReq.location = this.competition.location;
+            competitionReq.date = this.competition.date;
+
+            console.log(competitionReq);
 
             this.competitionService
                 .updateCompetition(competitionReq)
@@ -71,7 +83,7 @@ export class UpdateCompetitionComponent implements OnInit {
                 .subscribe({
                     next: (c) => {
                         this.refreshCompetitionInfo.emit({ c });
-
+                        this.competition = c.data as CompetitionResponse;
                         this.toast.success({
                             detail: 'Competition updated',
                             summary: c.message,
@@ -89,6 +101,7 @@ export class UpdateCompetitionComponent implements OnInit {
                     },
                     complete: () => {
                         this.isLoading = false;
+                        this.modalContainer.closeModal();
                     },
                 });
         } else {
@@ -106,8 +119,14 @@ export class UpdateCompetitionComponent implements OnInit {
         initTE({ Input });
 
         this.competitionForm.setValue({
-            startTime: this.datePipe.transform(this.competition.startTime, 'HH:mm'),
-            endTime: this.datePipe.transform(this.competition.endTime, 'yyyy-MM-dd, HH:mm'),
+            startTime: this.datePipe.transform(
+                this.competition.startTime,
+                'HH:mm'
+            ),
+            endTime: this.datePipe.transform(
+                this.competition.endTime,
+                'yyyy-MM-dd, HH:mm'
+            ),
             amount: this.competition.amount,
             numberOfParticipants: this.competition.numberOfParticipants,
         });

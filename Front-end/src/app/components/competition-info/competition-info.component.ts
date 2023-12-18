@@ -25,8 +25,9 @@ export class CompetitionInfoComponent implements OnInit {
         }
     }
 
-    setCompetition(c: Response<CompetitionResponse>): void {
-        this.competition = c.data as CompetitionResponse;
+    setCompetition(evt: any): void {
+        this.competition = evt.c.data as CompetitionResponse;
+
     }
 
     ngOnInit(): void {
