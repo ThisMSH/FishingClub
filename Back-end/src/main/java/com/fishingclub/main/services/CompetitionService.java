@@ -62,12 +62,12 @@ public class CompetitionService implements ICompetitionService {
 
         Competition competition = competitionRepository.findById(competitionDTO.getCode()).orElseThrow(() -> new ResourceNotFoundException("Competition with the code \"" + competitionDTO.getCode() + "\" does not exist."));
 
-        if (!competition.getDate().isEqual(competitionDTO.getDate()) || !competition.getLocation().equals(competitionDTO.getLocation())
+        if (competition.getDate() != null && (!competition.getDate().isEqual(competitionDTO.getDate()) || !competition.getLocation().equals(competitionDTO.getLocation()))
         ) {
             throw new ResourceAlreadyExistException("Date and Location cannot be updated.");
         }
 
-        if (!competition.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
+        if (competition.getDate() != null && !competition.getDate().isEqual(competitionDTO.getStartTime().toLocalDate())) {
             throw new ResourceBadRequestException("Starting time must be in the same day of the competition.");
         }
 
