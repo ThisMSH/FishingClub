@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompetitionResponse } from 'src/app/models/competition/competition-response';
+import { Response } from 'src/app/models/response/response';
 
 @Component({
     selector: 'app-competition-info',
@@ -16,12 +17,16 @@ export class CompetitionInfoComponent implements OnInit {
         const endingDate = new Date(this.competition.endTime);
 
         if (now < startingDate) {
-            this.status = "incoming";
+            this.status = 'incoming';
         } else if (now >= startingDate && now <= endingDate) {
-            this.status = "ongoing";
+            this.status = 'ongoing';
         } else {
-            this.status = "done";
+            this.status = 'done';
         }
+    }
+
+    setCompetition(c: Response<CompetitionResponse>): void {
+        this.competition = c.data as CompetitionResponse;
     }
 
     ngOnInit(): void {

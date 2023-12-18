@@ -60,7 +60,10 @@ export class DefaultInputComponent<T>
         } else if (this.inputContainer && this.specialType === 'datetime') {
             new Datetimepicker(this.inputContainer.nativeElement, {
                 timepicker: { ...this.dateRules.timepicker, format24: true },
-                datepicker: { ...this.dateRules.datepicker, format: 'yyyy-mm-dd'}
+                datepicker: {
+                    ...this.dateRules.datepicker,
+                    format: 'yyyy-mm-dd',
+                },
             });
 
             this.inputContainer.nativeElement.setAttribute(

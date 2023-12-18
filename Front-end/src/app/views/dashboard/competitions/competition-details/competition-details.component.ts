@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
@@ -36,7 +36,7 @@ export class CompetitionDetailsComponent implements OnInit {
                         this.toast.error({
                             detail: 'Error occured',
                             summary: err.error.message,
-                            duration: 6000
+                            duration: 6000,
                         });
                     }
 
@@ -46,19 +46,17 @@ export class CompetitionDetailsComponent implements OnInit {
                     this.isLoading = false;
                     setTimeout(() => {
                         initTE({ Tab });
-                    }, 0)
-                }
-            })
+                    }, 0);
+                },
+            });
     }
 
     ngOnInit(): void {
         initTE({ Tab }, { allowReinits: true });
 
-        this.route.paramMap.subscribe(param => {
+        this.route.paramMap.subscribe((param) => {
             this.code = param.get('code') as string;
-        })
-
-        console.log("oninit");
+        });
 
         this.getCompetition(this.code);
     }

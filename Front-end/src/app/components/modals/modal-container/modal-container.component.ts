@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Modal, Ripple, initTE } from 'tw-elements';
 
 @Component({
   selector: 'app-modal-container',
   templateUrl: './modal-container.component.html',
   styleUrls: ['./modal-container.component.css']
 })
-export class ModalContainerComponent {
+export class ModalContainerComponent implements OnInit {
     @Input() title!: string;
     @Input() modalId!: string;
     @Input() titleId!: string;
@@ -18,5 +19,9 @@ export class ModalContainerComponent {
 
     formSubmit(): void {
         this.onSubmit.emit();
+    }
+
+    ngOnInit(): void {
+        initTE({ Modal, Ripple });
     }
 }

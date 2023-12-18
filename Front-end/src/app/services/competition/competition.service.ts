@@ -41,4 +41,13 @@ export class CompetitionService {
             competition
         );
     }
+
+    updateCompetition(
+        competition: CompetitionRequest
+    ): Observable<Response<CompetitionResponse>> {
+        return this.http.put<Response<CompetitionResponse>>(
+            `${this.url}/competitions/update`,
+            competition
+        );
+    }
 }

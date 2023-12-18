@@ -1,6 +1,11 @@
 <div>
     <div class="flex justify-end items-center gap-4">
-        <app-default-button type="button" label="Update"></app-default-button>
+        <app-default-button
+            type="button"
+            label="Update"
+            data-te-toggle="modal"
+            data-te-target="#update-competition-modal"
+        ></app-default-button>
         <app-default-button
             type="button"
             label="Delete"
@@ -47,7 +52,15 @@
                 </svg>
             </span>
             <span>Status:</span
-            ><span class="!font-medium capitalize" [ngClass]="{'text-warning-600 dark:text-warning': status === 'incoming', 'text-success-700 dark:text-success': status === 'ongoing', 'text-primary-600 dark:text-primary-500': status === 'done'}">{{ status }}</span>
+            ><span
+                class="!font-medium capitalize"
+                [ngClass]="{
+                    'text-warning-600 dark:text-warning': status === 'incoming',
+                    'text-success-700 dark:text-success': status === 'ongoing',
+                    'text-primary-600 dark:text-primary-500': status === 'done'
+                }"
+                >{{ status }}</span
+            >
         </p>
         <p>
             <span
@@ -109,7 +122,8 @@
                     />
                 </svg>
             </span>
-            <span>Stating time:</span>{{ competition.startTime | date : "hh:mm" }}
+            <span>Stating time:</span
+            >{{ competition.startTime | date : "hh:mm" }}
         </p>
         <p>
             <span>
@@ -128,7 +142,8 @@
                     />
                 </svg>
             </span>
-            <span>Ending time:</span> {{ competition.endTime | date : "dd-MM-yyyy hh:mm" }}
+            <span>Ending time:</span>
+            {{ competition.endTime | date : "dd-MM-yyyy hh:mm" }}
         </p>
         <p>
             <span
@@ -147,7 +162,8 @@
                     />
                 </svg>
             </span>
-            <span>Number of participants:</span> {{ competition.numberOfParticipants }}
+            <span>Number of participants:</span>
+            {{ competition.numberOfParticipants }}
         </p>
         <p>
             <span
@@ -166,7 +182,13 @@
                     />
                 </svg>
             </span>
-            <span>Amount:</span> {{ competition.amount | customCurrency : "DH" }}
+            <span>Amount:</span>
+            {{ competition.amount | customCurrency : "DH" }}
         </p>
     </div>
+    <app-update-competition
+        *ngIf="competition"
+        [competition]="competition"
+        (refreshCompetitionInfo)="setCompetition($event)"
+    ></app-update-competition>
 </div>

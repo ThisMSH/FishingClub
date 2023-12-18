@@ -1,18 +1,16 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
 import { CompetitionRequest } from 'src/app/models/competition/competition-request';
-import { CompetitionResponse } from 'src/app/models/competition/competition-response';
 import { CompetitionService } from 'src/app/services/competition/competition.service';
-import { Modal, Ripple, Toast, initTE } from 'tw-elements';
 
 @Component({
     selector: 'app-create-competition',
     templateUrl: './create-competition.component.html',
     styleUrls: ['./create-competition.component.css'],
 })
-export class CreateCompetitionComponent implements OnInit {
+export class CreateCompetitionComponent {
     @Output() refreshCompetitionsList = new EventEmitter();
     private competitionService = inject(CompetitionService);
     private formBuilder = inject(FormBuilder);
@@ -20,7 +18,7 @@ export class CreateCompetitionComponent implements OnInit {
     isLoading: boolean = false;
     minDate: Date = new Date();
 
-    competitionForm = this.formBuilder.group({
+    competitionForm: FormGroup = this.formBuilder.group({
         date: ['', Validators.required],
         startTime: ['', Validators.required],
         endTime: ['', Validators.required],
@@ -119,9 +117,5 @@ export class CreateCompetitionComponent implements OnInit {
                 duration: 5000,
             });
         }
-    }
-
-    ngOnInit(): void {
-        initTE({ Modal, Ripple });
     }
 }

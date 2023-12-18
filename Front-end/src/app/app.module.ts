@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgToastModule } from 'ng-angular-popup';
 import { HomeComponent } from './views/main/home/home.component';
+import { DatePipe } from '@angular/common';
 import { CompetitionsComponent } from './views/dashboard/competitions/competitions.component';
 import { CompetitionDetailsComponent } from './views/dashboard/competitions/competition-details/competition-details.component';
 import { MembersComponent } from './views/dashboard/members/members.component';
@@ -92,7 +93,7 @@ import { UpdateCompetitionComponent } from './components/modals/update-competiti
         ReactiveFormsModule,
         NgToastModule,
     ],
-    providers: [],
+    providers: [DatePipe],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
