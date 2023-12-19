@@ -1,0 +1,29 @@
+<div class="relative">
+    <select
+        data-te-select-init
+        data-te-select-filter="true"
+        data-te-select-validation="true"
+        [id]="selectId"
+        [formControl]="control"
+        [required]="isRequired"
+    >
+        <option value="" hidden selected></option>
+        <option *ngFor="let opt of options | keyvalue" [value]="opt.value">
+            {{ opt.key }}
+        </option>
+    </select>
+    <label
+        data-te-select-label-ref
+        class="peer-required:after:content-['_*'] peer-required:after:text-red-600 dark:peer-required:after:text-red-400"
+        >{{ label }}</label
+    >
+    <div
+        *ngIf="control.touched && control.invalid"
+        class="absolute flex justify-between w-full text-sm text-neutral-500 dark:text-neutral-200 peer-focus:text-danger-600 dark:peer-focus:text-danger-500"
+        data-te-input-helper-ref
+    >
+        <p *ngFor="let err of control.errors | keyvalue">
+            {{ errors[err.key] }}
+        </p>
+    </div>
+</div>

@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Dropdown, initTE } from 'tw-elements';
 
 @Component({
     selector: 'app-default-dropdown',
     templateUrl: './default-dropdown.component.html',
     styleUrls: ['./default-dropdown.component.css'],
 })
-export class DefaultDropdownComponent {
+export class DefaultDropdownComponent implements OnInit {
     @Input() label!: string;
     @Input() dropdownId!: string;
     @Input() list!: string[];
@@ -13,6 +14,10 @@ export class DefaultDropdownComponent {
     @Output() sendItem = new EventEmitter();
 
     selectedItem(item: string): void {
-        this.sendItem.emit({item});
+        this.sendItem.emit({ item });
+    }
+
+    ngOnInit(): void {
+        initTE({ Dropdown });
     }
 }

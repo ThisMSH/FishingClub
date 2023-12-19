@@ -9,7 +9,15 @@ export type BtnStyle =
     | 'success'
     | 'warning';
 
-export type InputType = 'text' | 'email' | 'password' | 'number' | 'date' | 'date-time' | 'time' | 'search';
+export type InputType =
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'date'
+    | 'date-time'
+    | 'time'
+    | 'search';
 
 export type SpecialType = 'date' | 'time' | 'datetime';
 
@@ -25,3 +33,5 @@ export type PaginationParams = {
     fullName?: string;
     filter?: CompetitionFilter;
 };
+
+export type IdentityDocumentType = 'CIN' | 'RESIDENCE_CARD' | 'PASSPORT';

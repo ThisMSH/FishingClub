@@ -32,7 +32,6 @@ export class DefaultInputComponent<T>
     extends ControlValueAccessorDirective<T>
     implements AfterViewInit
 {
-    @ViewChild('inputElement') inputEle!: ElementRef;
     @ViewChild('inputContainer') inputContainer!: ElementRef;
     @Input() inputId: string = '';
     @Input() label: string = '';

@@ -44,6 +44,8 @@ import { TwoWaySelectInputComponent } from './components/utilities/elements/two-
 import { DefaultDropdownComponent } from './components/utilities/elements/default-dropdown/default-dropdown.component';
 import { UpdateCompetitionComponent } from './components/modals/update-competition/update-competition.component';
 import { DeleteModalComponent } from './components/modals/delete-modal/delete-modal.component';
+import { CreateRankingComponent } from './components/modals/create-ranking/create-ranking.component';
+import { DefaultSelectComponent } from './components/utilities/elements/default-select/default-select.component';
 
 @NgModule({
     declarations: [
@@ -86,6 +88,8 @@ import { DeleteModalComponent } from './components/modals/delete-modal/delete-mo
         DefaultDropdownComponent,
         UpdateCompetitionComponent,
         DeleteModalComponent,
+        CreateRankingComponent,
+        DefaultSelectComponent,
     ],
     imports: [
         BrowserModule,

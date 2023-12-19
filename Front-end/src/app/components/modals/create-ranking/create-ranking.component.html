@@ -1,0 +1,20 @@
+<app-modal-container
+    title="Assign a new participant"
+    modalId="ranking-modal"
+    titleId="ranking-title"
+    submitLabel="Assign"
+    cancelLabel="Cancel"
+    [formGroup]="rankingForm"
+    [isLoading]="isLoading"
+    (onSubmit)="onSubmit()"
+>
+    <div class="grid grid-cols-1 gap-y-10">
+        <app-default-select
+            label="Select member"
+            selectId="member-select-id"
+            formControlName="memberNumber"
+            [errors]="rankingErrors.memberNumber"
+            [options]="memberOptions"
+        ></app-default-select>
+    </div>
+</app-modal-container>

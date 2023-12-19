@@ -2,10 +2,13 @@
     <div class="flex justify-end items-center gap-4">
         <app-default-button
             type="button"
-            label="Add Fish Catch"
+            label="Add a participant"
+            data-te-toggle="modal"
+            data-te-target="#ranking-modal"
         ></app-default-button>
     </div>
     <div id="accordion" class="mt-4 border border-b-0 border-neutral-200 bg-white dark:border-neutral-600 rounded-lg overflow-hidden">
         <app-competition-member-details></app-competition-member-details>
     </div>
+    <app-create-ranking [code]="competition.code"></app-create-ranking>
 </div>
