@@ -11,5 +11,6 @@ export class CompetitionMemberComponent implements OnInit {
     @Input() competition!: CompetitionResponse;
     ngOnInit(): void {
         initTE({ Collapse });
+        console.log(this.competition);
     }
 }
