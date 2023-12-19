@@ -7,8 +7,16 @@
             data-te-target="#ranking-modal"
         ></app-default-button>
     </div>
-    <div id="accordion" class="mt-4 border border-b-0 border-neutral-200 bg-white dark:border-neutral-600 rounded-lg overflow-hidden">
-        <app-competition-member-details></app-competition-member-details>
+    <div
+        id="accordion"
+        class="mt-4 border border-b-0 border-neutral-200 bg-white dark:border-neutral-600 rounded-lg overflow-hidden"
+    >
+        <app-competition-member-details
+            *ngFor="let ranking of competition.rankings; index as i"
+            [ranking]="ranking"
+            [accordionId]="'accordion-id-' + i"
+            [accordionTarget]="'accordion-target-' + i"
+        ></app-competition-member-details>
     </div>
     <app-create-ranking [code]="competition.code"></app-create-ranking>
 </div>

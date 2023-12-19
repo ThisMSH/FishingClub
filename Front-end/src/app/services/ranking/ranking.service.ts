@@ -21,4 +21,12 @@ export class RankingService {
             ranking
         );
     }
+
+    deleteRanking(
+        ranking: RankingRequest
+    ): Observable<Response<RankingResponse>> {
+        return this.http.delete<Response<RankingResponse>>(
+            `${this.url}/delete/code-${ranking.competitionCode}/member-${ranking.memberNumber}`
+        );
+    }
 }

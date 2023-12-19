@@ -1,8 +1,8 @@
-import { HuntingRequest } from "../hunting/hunting-request";
-import { RankingRequest } from "../ranking/ranking-request";
+import { HuntingResponse } from "../hunting/hunting-response";
+import { RankingResponse } from "../ranking/ranking-response";
 import { Competition } from "./competition";
 
 export interface CompetitionResponse extends Competition {
-    rankings: RankingRequest[];
-    huntings: HuntingRequest[];
+    rankings: RankingResponse[];
+    huntings: HuntingResponse[];
 }
