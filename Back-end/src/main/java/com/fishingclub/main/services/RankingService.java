@@ -82,15 +82,20 @@ public class RankingService implements IRankingService {
 
     @Override
     public RankingDTO delete(RankingKey id) {
-        RankingKey key = new RankingKey();
-        key.setCompetitionCode(id.getCompetitionCode());
-        key.setMemberNumber(id.getMemberNumber());
+        return null;
+    }
 
-        if (!memberRepository.existsById(id.getMemberNumber())) {
+    @Override
+    public RankingDTO delete(String code, Integer number) {
+        RankingKey key = new RankingKey();
+        key.setCompetitionCode(code);
+        key.setMemberNumber(number);
+
+        if (!memberRepository.existsById(number)) {
             throw new ResourceNotFoundException("Member not found.");
         }
 
-        if (!competitionRepository.existsById(id.getCompetitionCode())) {
+        if (!competitionRepository.existsById(code)) {
             throw new ResourceNotFoundException("Competition not found.");
         }
 

@@ -68,9 +68,9 @@ public class RankingController {
         );
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteRanking(@RequestBody @Valid RankingKey key) {
-        RankingDTO ranking = rankingService.delete(key);
+    @DeleteMapping("/delete/code-{code}/member-{id}")
+    public ResponseEntity<Object> deleteRanking(@PathVariable String code, @PathVariable Integer id) {
+        RankingDTO ranking = rankingService.delete(code, id);
 
         return ResponseHandler.success(
                 "The member has been removed from the competition successfully.",

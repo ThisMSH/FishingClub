@@ -43,7 +43,7 @@ public class HuntingController {
         );
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteHunting(@PathVariable Integer id) {
         HuntingDTO hunting = huntingService.delete(id);
 
