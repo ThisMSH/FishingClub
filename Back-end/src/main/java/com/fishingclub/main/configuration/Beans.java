@@ -1,10 +1,10 @@
 package com.fishingclub.main.configuration;
 
 import com.fishingclub.main.dto.CompetitionDTO;
+import com.fishingclub.main.dto.MemberDTO;
+import com.fishingclub.main.dto.RankingDTO;
 import com.fishingclub.main.dto.noRelations.FishNoRelDTO;
-import com.fishingclub.main.entities.Competition;
-import com.fishingclub.main.entities.Fish;
-import com.fishingclub.main.entities.Level;
+import com.fishingclub.main.entities.*;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -39,6 +39,16 @@ public class Beans {
                 .addMappings(mapper -> {
                     mapper.skip(CompetitionDTO::setRankings);
                     mapper.skip(CompetitionDTO::setHuntings);
+                });
+
+        modelMapper.typeMap(Ranking.class, RankingDTO.class)
+                .addMappings(mapper -> {
+                    mapper.skip(RankingDTO::setMember);
+                });
+
+        modelMapper.typeMap(Member.class, MemberDTO.class)
+                .addMappings(mapper -> {
+                    mapper.skip(MemberDTO::setHuntings);
                 });
 
         return modelMapper;

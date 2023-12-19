@@ -2,9 +2,11 @@ package com.fishingclub.main.services;
 
 import com.fishingclub.main.dto.CompetitionDTO;
 import com.fishingclub.main.dto.HuntingDTO;
+import com.fishingclub.main.dto.MemberDTO;
 import com.fishingclub.main.dto.RankingDTO;
 import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
 import com.fishingclub.main.entities.Competition;
+import com.fishingclub.main.entities.Member;
 import com.fishingclub.main.enums.CompetitionFilterType;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceBadRequestException;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -108,11 +111,17 @@ public class CompetitionService implements ICompetitionService {
         }
 
         Competition competition = competitionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Competition does not exist."));
-
         CompetitionDTO competitionDTO = modelMapper.map(competition, CompetitionDTO.class);
+        List<RankingDTO> rankingDTOs = competition.getRankings().stream().map(ranking -> modelMapper.map(ranking, RankingDTO.class)).toList();
+
+        for (int i = 0; i < rankingDTOs.size(); i++) {
+            MemberDTO member = modelMapper.map(competition.getRankings().get(i).getMember(), MemberDTO.class);
+            member.setHuntings(competition.getRankings().get(i).getMember().getHuntings().stream().map(hunting -> modelMapper.map(hunting, HuntingDTO.class)).collect(Collectors.toList()));
+            rankingDTOs.get(i).setMember(member);
+        }
 
         competitionDTO.setHuntings(competition.getHuntings().stream().map(hunting -> modelMapper.map(hunting, HuntingDTO.class)).collect(Collectors.toList()));
-        competitionDTO.setRankings(competition.getRankings().stream().map(ranking -> modelMapper.map(ranking, RankingDTO.class)).collect(Collectors.toList()));
+        competitionDTO.setRankings(rankingDTOs);
 
         return competitionDTO;
     }

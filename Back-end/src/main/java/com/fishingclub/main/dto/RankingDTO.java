@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class RankingDTO {
     private int rank;
     private int score;
-    private MemberNoRelDTO member;
+    private MemberDTO member;
     private CompetitionNoRelDTO competition;
 }

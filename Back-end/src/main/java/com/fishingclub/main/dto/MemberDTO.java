@@ -20,5 +20,5 @@ public class MemberDTO {
     private IdentityDocumentType identityDocument;
     private String identityNumber;
     private List<RankingNoRelDTO> rankings;
-    private List<HuntingNoRelDTO> huntings;
+    private List<HuntingDTO> huntings;
 }
