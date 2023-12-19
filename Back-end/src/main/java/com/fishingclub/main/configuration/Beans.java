@@ -1,9 +1,8 @@
 package com.fishingclub.main.configuration;
 
-import com.fishingclub.main.dto.FishDTO;
-import com.fishingclub.main.dto.LevelDTO;
+import com.fishingclub.main.dto.CompetitionDTO;
 import com.fishingclub.main.dto.noRelations.FishNoRelDTO;
-import com.fishingclub.main.dto.noRelations.LevelNoRelDTO;
+import com.fishingclub.main.entities.Competition;
 import com.fishingclub.main.entities.Fish;
 import com.fishingclub.main.entities.Level;
 import org.modelmapper.AbstractConverter;
@@ -35,6 +34,12 @@ public class Beans {
             .addMappings(mapper -> {
                 mapper.map(FishNoRelDTO::getLevelCode, Fish::setLevel);
             });
+
+        modelMapper.typeMap(Competition.class, CompetitionDTO.class)
+                .addMappings(mapper -> {
+                    mapper.skip(CompetitionDTO::setRankings);
+                    mapper.skip(CompetitionDTO::setHuntings);
+                });
 
         return modelMapper;
     }

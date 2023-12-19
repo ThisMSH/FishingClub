@@ -1,7 +1,5 @@
 package com.fishingclub.main.dto;
 
-import com.fishingclub.main.dto.noRelations.HuntingNoRelDTO;
-import com.fishingclub.main.dto.noRelations.RankingNoRelDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +17,6 @@ public class CompetitionDTO {
     private int numberOfParticipants;
     private String location;
     private double amount;
-    private List<RankingNoRelDTO> rankings;
-    private List<HuntingNoRelDTO> huntings;
+    private List<RankingDTO> rankings;
+    private List<HuntingDTO> huntings;
 }

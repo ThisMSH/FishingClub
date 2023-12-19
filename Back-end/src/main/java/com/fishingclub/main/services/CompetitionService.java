@@ -1,6 +1,8 @@
 package com.fishingclub.main.services;
 
 import com.fishingclub.main.dto.CompetitionDTO;
+import com.fishingclub.main.dto.HuntingDTO;
+import com.fishingclub.main.dto.RankingDTO;
 import com.fishingclub.main.dto.noRelations.CompetitionNoRelDTO;
 import com.fishingclub.main.entities.Competition;
 import com.fishingclub.main.enums.CompetitionFilterType;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService implements ICompetitionService {
@@ -106,7 +109,12 @@ public class CompetitionService implements ICompetitionService {
 
         Competition competition = competitionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Competition does not exist."));
 
-        return modelMapper.map(competition, CompetitionDTO.class);
+        CompetitionDTO competitionDTO = modelMapper.map(competition, CompetitionDTO.class);
+
+        competitionDTO.setHuntings(competition.getHuntings().stream().map(hunting -> modelMapper.map(hunting, HuntingDTO.class)).collect(Collectors.toList()));
+        competitionDTO.setRankings(competition.getRankings().stream().map(ranking -> modelMapper.map(ranking, RankingDTO.class)).collect(Collectors.toList()));
+
+        return competitionDTO;
     }
 
     @Override
