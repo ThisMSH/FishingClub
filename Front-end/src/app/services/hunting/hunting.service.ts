@@ -13,6 +13,10 @@ export class HuntingService {
     private http = inject(HttpClient);
     url = environment.apiUrl + '/hunting';
 
+    getHunting(id: number): Observable<Response<HuntingResponse>> {
+        return this.http.get<Response<HuntingResponse>>(`${this.url}/${id}`);
+    }
+
     createHunting(
         hunting: HuntingRequest
     ): Observable<Response<HuntingResponse>> {
