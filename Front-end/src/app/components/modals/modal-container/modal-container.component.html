@@ -60,7 +60,11 @@
                     btnStyle="secondary"
                     data-te-modal-dismiss
                 ></app-default-button>
-                <app-default-button [label]="submitLabel" [isLoading]="isLoading"></app-default-button>
+                <app-default-button
+                    [btnStyle]="submitStyle"
+                    [label]="submitLabel"
+                    [isLoading]="isLoading"
+                ></app-default-button>
             </div>
         </form>
     </div>

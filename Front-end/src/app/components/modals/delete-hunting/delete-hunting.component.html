@@ -1,0 +1,22 @@
+<app-modal-container
+    title="Delete hunted fish"
+    [modalId]="'delete-hunting-modal-' + id"
+    [titleId]="'delete-hunting-title-' + id"
+    (onSubmit)="onSubmit()"
+    [formGroup]="huntingForm"
+    [isLoading]="isLoading"
+    submitStyle="danger"
+    submitLabel="Delete"
+    cancelLabel="Cancel"
+>
+    <div class="grid grid-cols-1 gap-y-10 gap-x-4">
+        <app-default-input
+            label="Amount of fish"
+            formControlName="numOfFish"
+            [inputId]="'amount-of-fish-' + id"
+            inputType="number"
+            [max]="numberOfFish"
+            [errors]="huntingErrors.numOfFish"
+        ></app-default-input>
+    </div>
+</app-modal-container>

@@ -1,6 +1,7 @@
 <div>
     <div class="flex justify-end items-center gap-4">
         <app-default-button
+            *ngIf="now < competitionStartTime"
             type="button"
             label="Add a participant"
             data-te-toggle="modal"
@@ -13,6 +14,7 @@
     >
         <app-competition-member-details
             *ngFor="let ranking of competition.rankings; index as i"
+            [competitionCode]="competition.code ?? ''"
             [ranking]="ranking"
             [accordionId]="'accordion-id-' + i"
             [accordionTarget]="'accordion-target-' + i"

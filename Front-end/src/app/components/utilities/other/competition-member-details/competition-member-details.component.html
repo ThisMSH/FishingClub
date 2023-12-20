@@ -42,20 +42,28 @@
         <div
             class="px-5 py-4 divide-y divide-neutral-300 dark:divide-neutral-600 child:px-4 child:py-2"
         >
-            <div
-                *ngFor="let hunting of ranking.member.huntings"
-                class="grid grid-cols-[1fr_50px_1fr]"
-            >
-                <p>{{ hunting.fish.name }}</p>
-                <p class="text-center">{{ hunting.numberOfFish }}</p>
-                <div class="justify-self-end">
-                    <app-default-button
-                        type="button"
-                        label="Delete"
-                        btnStyle="danger"
-                    ></app-default-button>
+            <ng-container *ngFor="let hunting of ranking.member.huntings">
+                <div
+                    *ngIf="hunting.competition.code === competitionCode"
+                    class="grid grid-cols-[1fr_50px_1fr]"
+                >
+                    <p>{{ hunting.fish.name }}</p>
+                    <p class="text-center">{{ hunting.numberOfFish }}</p>
+                    <div class="justify-self-end">
+                        <app-default-button
+                            type="button"
+                            label="Delete"
+                            btnStyle="danger"
+                            data-te-toggle="modal"
+                            [attr.data-te-target]="'#delete-hunting-modal-' + hunting.id"
+                        ></app-default-button>
+                    </div>
+                    <app-delete-hunting
+                        [id]="hunting.id ?? 0"
+                        [numberOfFish]="hunting.numberOfFish ?? 0"
+                    ></app-delete-hunting>
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
 </div>

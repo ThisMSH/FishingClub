@@ -11,8 +11,11 @@ export class CompetitionMemberDetailsComponent implements OnInit {
     @Input() ranking!: RankingResponse;
     @Input() accordionId!: string;
     @Input() accordionTarget!: string;
+    @Input() competitionCode!: string;
 
     ngOnInit(): void {
         initTE({ Collapse }, { allowReinits: true });
+        console.log('Ranking:');
+        console.log(this.ranking);
     }
 }

@@ -9,8 +9,13 @@ import { Collapse, initTE } from 'tw-elements';
 })
 export class CompetitionMemberComponent implements OnInit {
     @Input() competition!: CompetitionResponse;
+    competitionStartTime!: Date;
+    now: Date = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
     ngOnInit(): void {
         initTE({ Collapse });
-        console.log(this.competition);
+        this.competitionStartTime = new Date(this.competition.startTime);
+        console.log(this.now < this.competitionStartTime);
+
     }
 }

@@ -2,7 +2,7 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
-    Input,
+    Input as NgInput,
     ViewChild,
     forwardRef,
 } from '@angular/core';
@@ -13,7 +13,7 @@ import {
     Datepicker,
     Datetimepicker,
     Timepicker,
-    Input as TwInput,
+    Input,
     initTE,
 } from 'tw-elements';
 @Component({
@@ -33,18 +33,20 @@ export class DefaultInputComponent<T>
     implements AfterViewInit
 {
     @ViewChild('inputContainer') inputContainer!: ElementRef;
-    @Input() inputId: string = '';
-    @Input() label: string = '';
-    @Input() inputType: InputType = 'text';
-    @Input() specialType!: SpecialType;
-    @Input() maxLength: number | undefined;
-    @Input() disablePastDate!: boolean;
-    @Input() step!: number;
-    @Input() errors: Record<string, string> = {};
-    @Input() dateRules: any = {};
+    @NgInput() inputId: string = '';
+    @NgInput() label: string = '';
+    @NgInput() inputType: InputType = 'text';
+    @NgInput() specialType!: SpecialType;
+    @NgInput() maxLength: number | undefined;
+    @NgInput() max!: number;
+    @NgInput() min!: number;
+    @NgInput() disablePastDate!: boolean;
+    @NgInput() step!: number;
+    @NgInput() errors: Record<string, string> = {};
+    @NgInput() dateRules: any = {};
 
     ngAfterViewInit(): void {
-        initTE({ TwInput }, { allowReinits: true });
+        initTE({ Input }, { allowReinits: true });
 
         if (this.inputContainer && this.specialType === 'date') {
             new Datepicker(this.inputContainer.nativeElement, {
