@@ -1,11 +1,16 @@
 <div>
     <div class="flex justify-end items-center gap-4">
         <app-default-button
-            *ngIf="now < competitionStartTime"
             type="button"
             label="Add a participant"
             data-te-toggle="modal"
             data-te-target="#ranking-modal"
+        ></app-default-button>
+        <app-default-button
+            type="button"
+            label="Add a hunted fish"
+            data-te-toggle="modal"
+            data-te-target="#hunting-modal"
         ></app-default-button>
     </div>
     <div
@@ -21,4 +26,5 @@
         ></app-competition-member-details>
     </div>
     <app-create-ranking [code]="competition.code"></app-create-ranking>
+    <app-create-hunting></app-create-hunting>
 </div>

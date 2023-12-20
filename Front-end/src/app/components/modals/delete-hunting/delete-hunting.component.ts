@@ -1,8 +1,18 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { concatMap, from, take } from 'rxjs';
 import { HuntingService } from 'src/app/services/hunting/hunting.service';
+import { CompetitionDetailsComponent } from 'src/app/views/dashboard/competitions/competition-details/competition-details.component';
+import { ModalContainerComponent } from '../modal-container/modal-container.component';
 
 @Component({
     selector: 'app-delete-hunting',
@@ -10,8 +20,11 @@ import { HuntingService } from 'src/app/services/hunting/hunting.service';
     styleUrls: ['./delete-hunting.component.css'],
 })
 export class DeleteHuntingComponent implements OnInit {
+    @ViewChild(ModalContainerComponent) modalContainer!: ModalContainerComponent;
     @Input() id!: number;
+    @Input() idx!: number;
     @Input() numberOfFish!: number;
+    @Output() updateHuntedFish = new EventEmitter();
     private formBuilder = inject(FormBuilder);
     private huntingService = inject(HuntingService);
     private toast = inject(NgToastService);
@@ -50,12 +63,18 @@ export class DeleteHuntingComponent implements OnInit {
                         this.isLoading = false;
                     },
                     complete: () => {
-                        this.isLoading = false;
+                        const newFishCount: number = this.numberOfFish - count;
 
+                        this.isLoading = false;
+                        this.modalContainer.closeModal();
                         this.toast.success({
                             detail: 'Success',
                             summary: `${count} out of ${this.huntingForm.value.numOfFish} hunted fish have been deleted.`,
                             duration: 6000,
+                        });
+                        this.updateHuntedFish.emit({
+                            idx: this.idx,
+                            numOfFish: newFishCount,
                         });
                     },
                 });

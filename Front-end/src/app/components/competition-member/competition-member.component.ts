@@ -15,7 +15,5 @@ export class CompetitionMemberComponent implements OnInit {
     ngOnInit(): void {
         initTE({ Collapse });
         this.competitionStartTime = new Date(this.competition.startTime);
-        console.log(this.now < this.competitionStartTime);
-
     }
 }

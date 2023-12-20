@@ -47,6 +47,7 @@ import { DeleteModalComponent } from './components/modals/delete-modal/delete-mo
 import { CreateRankingComponent } from './components/modals/create-ranking/create-ranking.component';
 import { DefaultSelectComponent } from './components/utilities/elements/default-select/default-select.component';
 import { DeleteHuntingComponent } from './components/modals/delete-hunting/delete-hunting.component';
+import { CreateHuntingComponent } from './components/modals/create-hunting/create-hunting.component';
 
 @NgModule({
     declarations: [
@@ -92,6 +93,7 @@ import { DeleteHuntingComponent } from './components/modals/delete-hunting/delet
         CreateRankingComponent,
         DefaultSelectComponent,
         DeleteHuntingComponent,
+        CreateHuntingComponent,
     ],
     imports: [
         BrowserModule,

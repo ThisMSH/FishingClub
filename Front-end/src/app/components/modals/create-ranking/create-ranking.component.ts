@@ -4,7 +4,6 @@ import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
 import { CompetitionResponse } from 'src/app/models/competition/competition-response';
 import { MemberResponse } from 'src/app/models/member/member-response';
-import { CompetitionService } from 'src/app/services/competition/competition.service';
 import { MemberService } from 'src/app/services/member/member.service';
 import { RankingService } from 'src/app/services/ranking/ranking.service';
 import { ModalContainerComponent } from '../modal-container/modal-container.component';
@@ -16,8 +15,7 @@ import { RankingResponse } from 'src/app/models/ranking/ranking-response';
     styleUrls: ['./create-ranking.component.css'],
 })
 export class CreateRankingComponent implements OnInit {
-    @ViewChild(ModalContainerComponent)
-    modalContainer!: ModalContainerComponent;
+    @ViewChild(ModalContainerComponent) modalContainer!: ModalContainerComponent;
     @Input() code: string | undefined;
     private rankingService = inject(RankingService);
     private memberService = inject(MemberService);

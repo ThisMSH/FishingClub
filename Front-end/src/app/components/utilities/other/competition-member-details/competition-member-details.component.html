@@ -42,7 +42,7 @@
         <div
             class="px-5 py-4 divide-y divide-neutral-300 dark:divide-neutral-600 child:px-4 child:py-2"
         >
-            <ng-container *ngFor="let hunting of ranking.member.huntings">
+            <ng-container *ngFor="let hunting of ranking.member.huntings; index as i">
                 <div
                     *ngIf="hunting.competition.code === competitionCode"
                     class="grid grid-cols-[1fr_50px_1fr]"
@@ -61,6 +61,8 @@
                     <app-delete-hunting
                         [id]="hunting.id ?? 0"
                         [numberOfFish]="hunting.numberOfFish ?? 0"
+                        [idx]="i"
+                        (updateHuntedFish)="updateNumOfHunting($event)"
                     ></app-delete-hunting>
                 </div>
             </ng-container>

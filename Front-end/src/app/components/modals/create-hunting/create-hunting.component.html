@@ -1,0 +1,34 @@
+<app-modal-container
+    title="Add a hunted fish"
+    modalId="hunting-modal"
+    titleId="hunting-title"
+    (onSubmit)="onSubmit()"
+    [formGroup]="huntingForm"
+    [isLoading]="isLoading"
+    submitLabel="Submit"
+    cancelLabel="Cancel"
+>
+    <div class="grid grid-cols-1 gap-y-10 divide-y divide-neutral-500" formArrayName="huntingGroup">
+        <div *ngFor="let hunt of getHuntingGroup.controls; index as i" [formGroupName]="i">
+            <app-default-select
+                [selectId]="'member-' + i"
+                label="Select member"
+                [options]="memberOptions"
+                [errors]="huntingErrors.memberNumber"
+            ></app-default-select>
+            <app-default-select
+                [selectId]="'fish-' + i"
+                label="Select fish"
+                [errors]="huntingErrors.fishName"
+            ></app-default-select>
+            <app-default-input
+                [inputId]="'weight-' + i"
+                inputType="number"
+                label="Weight of the fish"
+                formControlName="weight"
+                [step]="0.01"
+                [errors]="huntingErrors.weight"
+            ></app-default-input>
+        </div>
+    </div>
+</app-modal-container>

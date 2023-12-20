@@ -13,6 +13,14 @@ export class CompetitionMemberDetailsComponent implements OnInit {
     @Input() accordionTarget!: string;
     @Input() competitionCode!: string;
 
+    updateNumOfHunting(evt: any): void {
+        if (evt.numOfFish === 0) {
+            this.ranking.member.huntings.splice(evt.idx, 1);
+        } else {
+            this.ranking.member.huntings[evt.idx].numberOfFish = evt.numOfFish;
+        }
+    }
+
     ngOnInit(): void {
         initTE({ Collapse }, { allowReinits: true });
         console.log('Ranking:');
