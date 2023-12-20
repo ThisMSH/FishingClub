@@ -8,7 +8,7 @@ import { Response } from 'src/app/models/response/response';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class LevelService {
     private http = inject(HttpClient);
@@ -44,6 +44,8 @@ export class LevelService {
     }
 
     deleteLevel(id: number): Observable<Response<LevelResponse>> {
-        return this.http.delete<Response<LevelResponse>>(`${this.url}/delete/${id}`);
+        return this.http.delete<Response<LevelResponse>>(
+            `${this.url}/delete/${id}`
+        );
     }
 }

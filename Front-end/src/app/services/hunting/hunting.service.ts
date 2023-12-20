@@ -27,6 +27,8 @@ export class HuntingService {
     }
 
     deleteHunting(id: number): Observable<Response<HuntingResponse>> {
-        return this.http.delete<Response<HuntingResponse>>(`${this.url}/delete/${id}`);
+        return this.http.delete<Response<HuntingResponse>>(
+            `${this.url}/delete/${id}`
+        );
     }
 }

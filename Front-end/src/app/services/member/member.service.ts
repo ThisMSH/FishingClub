@@ -45,6 +45,8 @@ export class MemberService {
     }
 
     deleteMember(id: number): Observable<Response<MemberResponse>> {
-        return this.http.delete<Response<MemberResponse>>(`${this.url}/delete/${id}`);
+        return this.http.delete<Response<MemberResponse>>(
+            `${this.url}/delete/${id}`
+        );
     }
 }
