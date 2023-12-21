@@ -78,7 +78,7 @@
                     role="tabpanel"
                     aria-labelledby="tabs-participants-tab"
                 >
-                    <app-competition-member *ngIf="competition" [competition]="competition"></app-competition-member>
+                    <app-competition-member *ngIf="competition" [competition]="competition" (exeGetCompetition)="getCompetition($event)"></app-competition-member>
                 </div>
                 <div
                     class="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"

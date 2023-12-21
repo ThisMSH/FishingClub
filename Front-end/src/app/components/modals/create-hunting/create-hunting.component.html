@@ -8,27 +8,54 @@
     submitLabel="Submit"
     cancelLabel="Cancel"
 >
-    <div class="grid grid-cols-1 gap-y-10 divide-y divide-neutral-500" formArrayName="huntingGroup">
-        <div *ngFor="let hunt of getHuntingGroup.controls; index as i" [formGroupName]="i">
+    <div
+        class="divide-y divide-neutral-500 child:py-5"
+        formArrayName="huntingGroup"
+    >
+        <div class="-mt-5 flex justify-end">
+            <app-default-button
+                label="Add another hunt"
+                type="button"
+                (onClick)="addHuntingForm()"
+            ></app-default-button>
+        </div>
+        <div
+            class="grid grid-cols-1 gap-y-10"
+            *ngFor="let hunt of getHuntingGroup.controls; index as i"
+            [formGroupName]="i"
+        >
+            <div class="flex gap-5">
+                <app-default-input
+                    [inputId]="'weight-' + i"
+                    inputType="number"
+                    label="Weight of the fish"
+                    formControlName="weight"
+                    [step]="0.01"
+                    [errors]="huntingErrors.weight"
+                    class="w-full"
+                ></app-default-input>
+                <app-default-button
+                    btnClass="w-max"
+                    label="Delete this field"
+                    btnStyle="danger"
+                    type="button"
+                    (onClick)="removeHuntingForm(i)"
+                ></app-default-button>
+            </div>
             <app-default-select
                 [selectId]="'member-' + i"
                 label="Select member"
+                formControlName="memberNumber"
                 [options]="memberOptions"
                 [errors]="huntingErrors.memberNumber"
             ></app-default-select>
             <app-default-select
                 [selectId]="'fish-' + i"
                 label="Select fish"
+                formControlName="fishName"
+                [options]="fishOptions"
                 [errors]="huntingErrors.fishName"
             ></app-default-select>
-            <app-default-input
-                [inputId]="'weight-' + i"
-                inputType="number"
-                label="Weight of the fish"
-                formControlName="weight"
-                [step]="0.01"
-                [errors]="huntingErrors.weight"
-            ></app-default-input>
         </div>
     </div>
 </app-modal-container>

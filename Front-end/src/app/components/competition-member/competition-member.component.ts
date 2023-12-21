@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CompetitionResponse } from 'src/app/models/competition/competition-response';
 import { Collapse, initTE } from 'tw-elements';
 
@@ -9,8 +9,13 @@ import { Collapse, initTE } from 'tw-elements';
 })
 export class CompetitionMemberComponent implements OnInit {
     @Input() competition!: CompetitionResponse;
+    @Output() exeGetCompetition = new EventEmitter();
     competitionStartTime!: Date;
     now: Date = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    getCompetitionCode(code: string): void {
+        this.exeGetCompetition.emit(code);
+    }
 
     ngOnInit(): void {
         initTE({ Collapse });

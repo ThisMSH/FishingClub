@@ -26,5 +26,5 @@
         ></app-competition-member-details>
     </div>
     <app-create-ranking [code]="competition.code"></app-create-ranking>
-    <app-create-hunting></app-create-hunting>
+    <app-create-hunting [competitionCode]="competition.code" (exeGetCompetition)="getCompetitionCode($event)"></app-create-hunting>
 </div>

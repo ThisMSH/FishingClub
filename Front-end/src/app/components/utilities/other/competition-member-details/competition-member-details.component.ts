@@ -23,7 +23,5 @@ export class CompetitionMemberDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         initTE({ Collapse }, { allowReinits: true });
-        console.log('Ranking:');
-        console.log(this.ranking);
     }
 }
