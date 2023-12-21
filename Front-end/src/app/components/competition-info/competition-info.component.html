@@ -10,7 +10,7 @@
             type="button"
             label="Delete"
             btnStyle="danger"
-            (onClick)="deleteModal.showModal = !deleteModal.showModal"
+            (onClick)="showDeleteModal = !showDeleteModal"
         ></app-default-button>
     </div>
     <div
@@ -192,7 +192,7 @@
         [competition]="competition"
         (refreshCompetitionInfo)="setCompetition($event)"
     ></app-update-competition>
-    <app-delete-modal (confirmDelete)="deleteCompetition()" [deleteLoading]="deleteLoading">
+    <app-delete-modal (confirmDelete)="deleteCompetition()" [deleteLoading]="deleteLoading" [showModal]="showDeleteModal">
         <p class="text-xl font-medium">
             ARE YOU SURE THAT YOU WANT TO DELETE THE COMPETITION "<span
                 class="font-bold"

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { take } from 'rxjs';
@@ -17,11 +17,11 @@ import { RankingResponse } from 'src/app/models/ranking/ranking-response';
 export class CreateRankingComponent implements OnInit {
     @ViewChild(ModalContainerComponent) modalContainer!: ModalContainerComponent;
     @Input() code: string | undefined;
+    @Output() exeGetCompetition = new EventEmitter();
     private rankingService = inject(RankingService);
     private memberService = inject(MemberService);
     private formBuilder = inject(FormBuilder);
     toast = inject(NgToastService);
-    competitions!: CompetitionResponse[];
     members!: MemberResponse[];
     isLoading: boolean = false;
     memberOptions: Record<string, number> = {};
@@ -69,6 +69,7 @@ export class CreateRankingComponent implements OnInit {
                     },
                     complete: () => {
                         this.isLoading = false;
+                        this.exeGetCompetition.emit(this.code);
                     },
                 });
         } else {

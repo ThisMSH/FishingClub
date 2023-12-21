@@ -27,7 +27,7 @@
             <div>
                 <div class="relative">
                     <img
-                        class="absolute w-36 top-0 left-0 translate-x-[-57%] translate-y-[-57%] -rotate-45"
+                        class="absolute w-36 top-0 left-0 translate-x-[-57%] translate-y-[-57%] -rotate-45 pointer-events-none"
                         src="assets/images/other/crown.png"
                         alt="Crown"
                     />
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="divide-y divide-neutral-500 rounded-lg overflow-hidden">
+        <div class="divide-y divide-neutral-500 rounded-md overflow-hidden">
             <div *ngFor="let rank of rankingList; index as i" class="px-4 py-2 flex items-center justify-between bg-neutral-300 dark:bg-neutral-700 divide-x divide-black/20 first:bg-amber-300 dark:first:bg-amber-300 first:text-black first:font-bold first:text-2xl [&:nth-child(2)]:bg-gray-500 dark:[&:nth-child(2)]:bg-gray-500 [&:nth-child(2)]:text-white [&:nth-child(2)]:font-semibold [&:nth-child(2)]:text-xl [&:nth-child(3)]:bg-amber-600 dark:[&:nth-child(3)]:bg-amber-600 [&:nth-child(3)]:text-white [&:nth-child(3)]:font-medium [&:nth-child(3)]:text-lg">
                 <div class="divide-x divide-black/20 flex items-center">
                     <p class="pr-2 w-10 text-center">{{ rank.rank }}</p>

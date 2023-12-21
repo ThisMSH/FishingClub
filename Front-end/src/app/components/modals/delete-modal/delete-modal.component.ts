@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DeleteModalComponent {
     @Output() confirmDelete = new EventEmitter();
     @Input() deleteLoading: boolean = false;
-    showModal: boolean = false;
+    @Input() showModal: boolean = false;
 
     onConfirm(): void {
         this.confirmDelete.emit();

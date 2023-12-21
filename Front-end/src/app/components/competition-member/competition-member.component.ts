@@ -17,6 +17,10 @@ export class CompetitionMemberComponent implements OnInit {
         this.exeGetCompetition.emit(code);
     }
 
+    removeParticipantFromRankingArr(idx: number): void {
+        const test = this.competition.rankings.splice(idx, 1);
+    }
+
     ngOnInit(): void {
         initTE({ Collapse });
         this.competitionStartTime = new Date(this.competition.startTime);

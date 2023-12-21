@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
     styleUrls: ['./competition-info.component.css'],
 })
 export class CompetitionInfoComponent implements OnInit {
-    @ViewChild(DeleteModalComponent) deleteModal!: DeleteModalComponent;
     @Input() competition!: CompetitionResponse;
     private competitionService = inject(CompetitionService);
     private router = inject(Router);
     toast = inject(NgToastService);
     status!: string;
     deleteLoading: boolean = false;
+    showDeleteModal: boolean = false;
 
     competitionStatus(): void {
         const now = new Date();

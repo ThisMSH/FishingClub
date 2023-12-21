@@ -23,8 +23,9 @@
             [ranking]="ranking"
             [accordionId]="'accordion-id-' + i"
             [accordionTarget]="'accordion-target-' + i"
+            (participantRemoved)="removeParticipantFromRankingArr(i)"
         ></app-competition-member-details>
     </div>
-    <app-create-ranking [code]="competition.code"></app-create-ranking>
+    <app-create-ranking [code]="competition.code" (exeGetCompetition)="getCompetitionCode($event)"></app-create-ranking>
     <app-create-hunting [competitionCode]="competition.code" (exeGetCompetition)="getCompetitionCode($event)"></app-create-hunting>
 </div>
