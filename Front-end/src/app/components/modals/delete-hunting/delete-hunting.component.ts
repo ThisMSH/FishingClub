@@ -59,8 +59,12 @@ export class DeleteHuntingComponent implements OnInit {
                         count++;
                     },
                     error: (err) => {
-                        console.log(err);
                         this.isLoading = false;
+                        this.toast.error({
+                            detail: 'Error occurred',
+                            summary: err.error.message,
+                            duration: 6000,
+                        });
                     },
                     complete: () => {
                         const newFishCount: number = this.numberOfFish - count;

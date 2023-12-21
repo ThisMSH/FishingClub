@@ -3,9 +3,71 @@
         <app-default-button
             type="button"
             label="Calculate ranking"
+            (onClick)="setRanks()"
         ></app-default-button>
     </div>
-    <div id="accordion" class="mt-4 border border-b-0 border-neutral-200 bg-white dark:border-neutral-600 rounded-lg overflow-hidden">
-        <app-competition-member-details></app-competition-member-details>
+    <div class="" *ngIf="rankingList.length > 0 && rankingList[0].rank !== 0">
+        <div
+            class="px-5 h-96 text-center flex child:p-2 child:h-full child:w-full child:flex child:flex-col child:justify-end child:items-center"
+        >
+            <div>
+                <p class="mb-2 text-3xl font-medium font-lilita-one">
+                    {{ rankingList[1].member.name + ' ' + rankingList[1].member.familyName }}
+                </p>
+                <div
+                    class="h-56 w-full flex justify-center items-center bg-gray-500 border-2 border-gray-600 dark:border-gray-400 rounded-t-2xl"
+                >
+                    <img
+                        class="w-44 drop-shadow-black-sm"
+                        src="/assets/images/other/second.png"
+                        alt="Second rank"
+                    />
+                </div>
+            </div>
+            <div>
+                <div class="relative">
+                    <img
+                        class="absolute w-36 top-0 left-0 translate-x-[-57%] translate-y-[-57%] -rotate-45"
+                        src="assets/images/other/crown.png"
+                        alt="Crown"
+                    />
+                    <p class="mb-2 text-3xl font-medium font-lilita-one">
+                        {{ rankingList[0].member.name + ' ' + rankingList[0].member.familyName }}
+                    </p>
+                </div>
+                <div
+                    class="h-80 w-full flex justify-center items-center bg-amber-300 border-2 border-amber-400 dark:border-amber-500 rounded-t-2xl"
+                >
+                    <img
+                        class="w-44 drop-shadow-black-sm"
+                        src="/assets/images/other/first.png"
+                        alt="First rank"
+                    />
+                </div>
+            </div>
+            <div>
+                <p class="mb-2 text-3xl font-medium font-lilita-one">
+                    {{ rankingList[2].member.name + ' ' + rankingList[2].member.familyName }}
+                </p>
+                <div
+                    class="h-44 w-full flex justify-center items-center bg-amber-600 border-2 border-amber-700 dark:border-amber-500 rounded-t-2xl"
+                >
+                    <img
+                        class="w-44 drop-shadow-black-sm"
+                        src="/assets/images/other/third.png"
+                        alt="Third rank"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="divide-y divide-neutral-500 rounded-lg overflow-hidden">
+            <div *ngFor="let rank of rankingList; index as i" class="px-4 py-2 flex items-center justify-between bg-neutral-300 dark:bg-neutral-700 divide-x divide-black/20 first:bg-amber-300 dark:first:bg-amber-300 first:text-black first:font-bold first:text-2xl [&:nth-child(2)]:bg-gray-500 dark:[&:nth-child(2)]:bg-gray-500 [&:nth-child(2)]:text-white [&:nth-child(2)]:font-semibold [&:nth-child(2)]:text-xl [&:nth-child(3)]:bg-amber-600 dark:[&:nth-child(3)]:bg-amber-600 [&:nth-child(3)]:text-white [&:nth-child(3)]:font-medium [&:nth-child(3)]:text-lg">
+                <div class="divide-x divide-black/20 flex items-center">
+                    <p class="pr-2 w-10 text-center">{{ rank.rank }}</p>
+                    <p class="pl-2">{{ rank.member.name + ' ' + rank.member.familyName }}</p>
+                </div>
+                <p class="pl-2 w-14 text-right">{{ rank.score }}</p>
+            </div>
+        </div>
     </div>
 </div>
