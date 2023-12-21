@@ -48,6 +48,7 @@ import { CreateRankingComponent } from './components/modals/create-ranking/creat
 import { DefaultSelectComponent } from './components/utilities/elements/default-select/default-select.component';
 import { DeleteHuntingComponent } from './components/modals/delete-hunting/delete-hunting.component';
 import { CreateHuntingComponent } from './components/modals/create-hunting/create-hunting.component';
+import { MemberCardComponent } from './components/member-card/member-card.component';
 
 @NgModule({
     declarations: [
@@ -94,6 +95,7 @@ import { CreateHuntingComponent } from './components/modals/create-hunting/creat
         DefaultSelectComponent,
         DeleteHuntingComponent,
         CreateHuntingComponent,
+        MemberCardComponent,
     ],
     imports: [
         BrowserModule,

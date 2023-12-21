@@ -1,1 +1,75 @@
-<p>members works!</p>
+<app-content-container>
+    <app-content-container-header>
+        <div>
+            <app-two-way-input
+                label="Search"
+                inputId="search-id"
+                inputType="search"
+                [(value)]="search"
+                (valueChange)="searchFn()"
+            ></app-two-way-input>
+        </div>
+        <div>
+            <app-default-button
+                type="button"
+                label="Add member"
+                data-te-toggle="modal"
+                data-te-target="#member-modal"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 mr-2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                </svg>
+            </app-default-button>
+        </div>
+    </app-content-container-header>
+    <div class="grid grid-cols-3 gap-4">
+        <ng-container *ngIf="isLoading; else content">
+            <app-loading-or-other-container class="col-span-3">
+                <div
+                    class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status"
+                >
+                    <span
+                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                        >Loading...</span
+                    >
+                </div>
+            </app-loading-or-other-container>
+        </ng-container>
+        <ng-template #content>
+            <ng-container *ngIf="memberArray.length > 0; else notFound">
+                <app-member-card
+                    *ngFor="let m of memberArray"
+                    [member]="m"
+                ></app-member-card>
+            </ng-container>
+            <ng-template #notFound>
+                <app-loading-or-other-container class="col-span-2">
+                    <p>No member found.</p>
+                </app-loading-or-other-container>
+            </ng-template>
+        </ng-template>
+    </div>
+    <app-pagination
+        *ngIf="members"
+        [pagesCount]="members.data.totalPages"
+        [currentPage]="members.data.number"
+        [sizeOptions]="sizeOptions"
+        sizeId="members-page-size"
+        sizeLabel="Size"
+        [size]="size"
+        (sizeChange)="setSize($event)"
+        (emitPage)="goToPage($event)"
+    ></app-pagination>
+</app-content-container>
