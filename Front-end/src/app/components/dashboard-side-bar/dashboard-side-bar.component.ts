@@ -18,15 +18,15 @@ export class DashboardSideBarComponent {
             img: '/assets/images/icons/member.png',
             link: '/dashboard/members',
         },
-        {
-            name: 'Fishes',
-            img: '/assets/images/icons/fish.png',
-            link: '/dashboard/fishes',
-        },
-        {
-            name: 'Levels',
-            img: '/assets/images/icons/level.png',
-            link: '/dashboard/levels',
-        },
+        // {
+        //     name: 'Fishes',
+        //     img: '/assets/images/icons/fish.png',
+        //     link: '/dashboard/fishes',
+        // },
+        // {
+        //     name: 'Levels',
+        //     img: '/assets/images/icons/level.png',
+        //     link: '/dashboard/levels',
+        // },
     ];
 }
