@@ -12,13 +12,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class MemberService implements IMemberService {
+public class MemberService implements IMemberService, UserDetailsService {
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
 
@@ -85,5 +87,11 @@ public class MemberService implements IMemberService {
         }
 
         return members;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return memberRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Member not found."));
     }
 }
