@@ -4,6 +4,7 @@ import com.fishingclub.main.dto.HuntingDTO;
 import com.fishingclub.main.dto.RankingDTO;
 import com.fishingclub.main.embeddables.RankingKey;
 import com.fishingclub.main.enums.IdentityDocumentType;
+import com.fishingclub.main.enums.UserRole;
 import com.fishingclub.main.validations.IdentityTypeValidator;
 import com.fishingclub.main.validations.LocalDateValidator;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,16 @@ public class MemberNoRelDTO {
     @NotBlank(message = "Family name is required.")
     @Size(min = 3, max = 36, message = "Family name must be between 3 and 36 characters.")
     private String familyName;
+
+    @NotBlank(message = "Username is required.")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters.")
+    private String username;
+
+    @NotBlank(message = "Password is required.")
+    private String password;
+
+    @NotNull(message = "User role is required.")
+    private UserRole userRole;
 
     @NotNull(message = "Accession date is required.")
     @LocalDateValidator(message = "Accession date is invalid.")
