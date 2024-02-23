@@ -1,5 +1,6 @@
 package com.fishingclub.main.services;
 
+import com.fishingclub.main.services.interfaces.IJwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -15,7 +16,7 @@ import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
-public class JwtService {
+public class JwtService implements IJwtService {
     @Value("${jwt.secret}")
     private static String secret;
 
