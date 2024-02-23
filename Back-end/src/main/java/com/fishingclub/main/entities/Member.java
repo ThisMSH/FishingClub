@@ -29,7 +29,7 @@ public class Member implements UserDetails {
     private String familyName;
 
     @Column(nullable = false)
-    private String email;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -63,7 +63,7 @@ public class Member implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.username;
     }
 
     @Override
