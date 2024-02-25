@@ -3,6 +3,7 @@ package com.fishingclub.main.services;
 import com.fishingclub.main.dto.MemberDTO;
 import com.fishingclub.main.dto.noRelations.MemberNoRelDTO;
 import com.fishingclub.main.entities.Member;
+import com.fishingclub.main.enums.UserRole;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.MemberRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -23,11 +25,13 @@ import java.util.Objects;
 public class MemberService implements IMemberService, UserDetailsService {
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, ModelMapper modelMapper) {
+    public MemberService(MemberRepository memberRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -37,6 +41,9 @@ public class MemberService implements IMemberService, UserDetailsService {
         }
 
         Member member = modelMapper.map(m, Member.class);
+        member.setUserRole(UserRole.MEMBER);
+        member.setIsActive(false);
+        member.setPassword(this.passwordEncoder.encode(m.getPassword()));
 
         Member createdMember = memberRepository.save(member);
 

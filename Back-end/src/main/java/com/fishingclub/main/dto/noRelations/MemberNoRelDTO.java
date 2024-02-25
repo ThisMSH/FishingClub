@@ -36,7 +36,6 @@ public class MemberNoRelDTO {
     @NotBlank(message = "Password is required.")
     private String password;
 
-    @NotNull(message = "User role is required.")
     private UserRole userRole;
 
     @NotNull(message = "Accession date is required.")
@@ -54,7 +53,6 @@ public class MemberNoRelDTO {
     @NotBlank(message = "Identity number is required.")
     private String identityNumber;
 
-    @NotNull(message = "Status of the account is required.")
     private Boolean isActive;
 
     private List<RankingKey> rankingKeys;
