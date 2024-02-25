@@ -54,6 +54,9 @@ public class MemberNoRelDTO {
     @NotBlank(message = "Identity number is required.")
     private String identityNumber;
 
+    @NotNull(message = "Status of the account is required.")
+    private Boolean isActive;
+
     private List<RankingKey> rankingKeys;
 
     private List<Integer> huntingIds;

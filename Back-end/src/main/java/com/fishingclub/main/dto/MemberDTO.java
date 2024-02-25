@@ -23,6 +23,7 @@ public class MemberDTO {
     private String nationality;
     private IdentityDocumentType identityDocument;
     private String identityNumber;
+    private Boolean isActive;
     private List<RankingNoRelDTO> rankings;
     private List<HuntingDTO> huntings;
 }

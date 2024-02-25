@@ -2,6 +2,7 @@ package com.fishingclub.main.controllers;
 
 import com.fishingclub.main.dto.MemberDTO;
 import com.fishingclub.main.dto.noRelations.MemberNoRelDTO;
+import com.fishingclub.main.dto.noRelations.SignInDTO;
 import com.fishingclub.main.services.MemberService;
 import com.fishingclub.main.utils.ResponseHandler;
 import com.fishingclub.main.utils.Utilities;
@@ -55,8 +56,13 @@ public class MemberController {
         );
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Object> createMember(@RequestBody @Valid MemberNoRelDTO m) {
+    @PostMapping("/login")
+    public ResponseEntity<Object> signInMember(@RequestBody @Valid SignInDTO m) {
+        return null;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Object> registerMember(@RequestBody @Valid MemberNoRelDTO m) {
         MemberDTO member = memberService.create(m);
 
         return ResponseHandler.success(

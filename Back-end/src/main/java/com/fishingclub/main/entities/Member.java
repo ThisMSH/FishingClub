@@ -50,6 +50,9 @@ public class Member implements UserDetails {
     @Column(nullable = false)
     private String identityNumber;
 
+    @Column(nullable = false)
+    private Boolean isActive;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<Ranking> rankings;
 
