@@ -31,4 +31,9 @@ public class ResourceExceptionHandler {
     public ResponseEntity<Object> handleResourceUnprocessableException(ResourceUnprocessableException e) {
         return ResponseHandler.exception(e, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseHandler.exception(e, HttpStatus.BAD_REQUEST);
+    }
 }
