@@ -1,23 +1,29 @@
 package com.fishingclub.main.services;
 
+import com.fishingclub.main.dto.JwtAuthResponse;
 import com.fishingclub.main.dto.MemberDTO;
 import com.fishingclub.main.dto.noRelations.MemberNoRelDTO;
+import com.fishingclub.main.dto.noRelations.SignInDTO;
 import com.fishingclub.main.entities.Member;
 import com.fishingclub.main.enums.UserRole;
 import com.fishingclub.main.exceptions.ResourceAlreadyExistException;
 import com.fishingclub.main.exceptions.ResourceNotFoundException;
 import com.fishingclub.main.repositories.MemberRepository;
+import com.fishingclub.main.services.interfaces.IJwtService;
 import com.fishingclub.main.services.interfaces.IMemberService;
 import com.fishingclub.main.utils.Utilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,12 +32,16 @@ public class MemberService implements IMemberService, UserDetailsService {
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final IJwtService jwtService;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.memberRepository = memberRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -100,5 +110,21 @@ public class MemberService implements IMemberService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         return memberRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("Member not found."));
+    }
+
+    @Override
+    public JwtAuthResponse signIn(SignInDTO s) {
+        Member member = memberRepository.findByUsername(s.getUsername()).orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(s.getUsername(), s.getPassword()));
+
+        String jwt = jwtService.getToken(member);
+        String refreshToken = jwtService.getRefreshToken(new HashMap<>(), member);
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setToken(jwt);
+        jwtAuthResponse.setRefreshToken(refreshToken);
+
+        return jwtAuthResponse;
     }
 }

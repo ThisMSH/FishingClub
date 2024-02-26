@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -32,6 +33,11 @@ public class JwtService implements IJwtService {
         return this.generateToken(userDetails.getUsername());
     }
 
+    @Override
+    public String getRefreshToken(Map<String, Object> map, UserDetails userDetails) {
+        return this.generateRefreshToken(map, userDetails.getUsername());
+    }
+
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = this.extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !this.isTokenExpired(token));
@@ -46,6 +52,16 @@ public class JwtService implements IJwtService {
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .signWith(this.getSignKey())
+                .compact();
+    }
+
+    private String generateRefreshToken(Map<String, Object> extraClaims, String username) {
+        return Jwts.builder()
+                .claims(extraClaims)
+                .subject(username)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30))
                 .signWith(this.getSignKey())
                 .compact();
     }
