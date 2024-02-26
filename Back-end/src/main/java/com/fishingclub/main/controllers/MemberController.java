@@ -1,5 +1,6 @@
 package com.fishingclub.main.controllers;
 
+import com.fishingclub.main.dto.JwtAuthResponse;
 import com.fishingclub.main.dto.MemberDTO;
 import com.fishingclub.main.dto.noRelations.MemberNoRelDTO;
 import com.fishingclub.main.dto.noRelations.SignInDTO;
@@ -58,7 +59,13 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> signInMember(@RequestBody @Valid SignInDTO m) {
-        return null;
+        JwtAuthResponse jwtAuthResponse = memberService.signIn(m);
+
+        return ResponseHandler.success(
+                "The member has signed in successfully.",
+                HttpStatus.OK,
+                jwtAuthResponse
+        );
     }
 
     @PostMapping("/register")
